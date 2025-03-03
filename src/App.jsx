@@ -10,7 +10,6 @@ import Login from "./pages/Auth/Login/Login";
 import ForgetPassword from "./pages/Auth/Forget Password/ForgetPassword";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-
 function App() {
   return (
     <>

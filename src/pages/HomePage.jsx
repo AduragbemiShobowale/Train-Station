@@ -6,8 +6,10 @@ function HomePage() {
   return (
     <div>
       <Destinations />
+      <OurServices />
     </div>
   );
 }
+
 
 export default HomePage;
