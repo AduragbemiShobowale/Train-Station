@@ -1,11 +1,12 @@
 import React from "react";
+import OurMissionPage from "../components/OurMissionPage";
 
-import ExplorePage from "../components/ExplorePage";
+import OurMission from "../components/OurMissionPage";
 
 const HomePage = () => {
   return (
     <div>
-      <ExplorePage />
+      <OurMissionPage />
     </div>
   );
 };
