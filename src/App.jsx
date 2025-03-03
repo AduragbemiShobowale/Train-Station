@@ -15,24 +15,26 @@ function App() {
   return (
     <>
       <Router>
-        <NavBar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/contactus" element={<ContactUsPage />} />
-          <Route path="/timetable" element={<TimeTablePage />} />
-          <Route path="/faq" element={<FaqPage />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/forgot-password" element={<ForgetPassword />} />
+          {/* Routes with Navbar & Footer */}
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contactus" element={<ContactUsPage />} />
+            <Route path="/timetable" element={<TimeTablePage />} />
+            <Route path="/faq" element={<FaqPage />} />
+          </Route>
+
+          {/* Routes without Navbar & Footer */}
+          <Route element={<AuthLayout />}>
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgetPassword />} />
+          </Route>
         </Routes>
-        <Footer />
       </Router>
     </>
   );
 }
 
 export default App;
-
-
-
