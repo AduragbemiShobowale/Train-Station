@@ -5,9 +5,9 @@ import AboutPage from "./pages/AboutPage";
 import ContactUsPage from "./pages/ContactUsPage";
 import TimeTablePage from "./pages/TimeTablePage";
 import FaqPage from "./pages/FaqPage";
-import Register from "./pages/Auth/Register";
-import Login from "./pages/Auth/Login";
-import ForgetPassword from "./pages/Auth/ForgetPassword";
+import Register from "./pages/Auth/register/Register";
+import Login from "./pages/Auth/Login/Login";
+import ForgetPassword from "./pages/Auth/Forget Password/ForgetPassword";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 
