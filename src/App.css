@@ -46,11 +46,10 @@
   border-radius: 5px;
 }
 
-.signin-button {
-  padding: 8px 15px;
-  border: none;
-  cursor: pointer;
-  color: white;
-  background-color: green;
-  border-radius: 5px;
+.card {
+  padding: 2em;
 }
+
+.read-the-docs {
+  color: #888;
+} */
