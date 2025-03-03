@@ -1,14 +1,14 @@
 import React from "react";
 import OurMissionPage from "../components/OurMissionPage";
 
-import OurMission from "../components/OurMissionPage";
+import Destinations from "../components/Destination";
 
-const HomePage = () => {
+function HomePage() {
   return (
     <div>
-      <OurMissionPage />
+      <Destinations />
     </div>
   );
-};
+}
 
 export default HomePage;
