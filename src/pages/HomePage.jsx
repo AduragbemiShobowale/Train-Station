@@ -1,13 +1,13 @@
 import React from "react";
 
-import ExplorePage from "../components/ExplorePage";
+import Destinations from "../components/Destination";
 
-const HomePage = () => {
+function HomePage() {
   return (
     <div>
-      <ExplorePage />
+      <Destinations />
     </div>
   );
-};
+}
 
 export default HomePage;
