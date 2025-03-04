@@ -1,0 +1,53 @@
+/* Desktop view */
+.main-container {
+  background-color: green;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+  border-top: 5px solid white;
+}
+
+.stat-element {
+  text-align: center;
+  padding: 15px;
+  width: 200px;
+}
+
+.figures {
+  font-size: 28px;
+  font-weight: bold;
+  display: block;
+}
+
+.text {
+  font-size: 14px;
+}
+
+/* Mobile view */
+@media screen and (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 20px;
+    margin: 20px;
+    border-radius: 10px;
+    width: 90%;
+  }
+
+  .stat-element {
+    width: 80%;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+
+  .figures {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .text {
+    font-size: 16px;
+  }
+}
