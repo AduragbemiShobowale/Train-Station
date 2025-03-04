@@ -33,8 +33,8 @@ export default function NavBar() {
       {/* Placeholder to prevent content shift when navbar becomes fixed */}
       {isScrolled && <div className="h-16"></div>}
       <div
-        className={`w-full ${
-          isScrolled ? "fixed top-0 left-0 shadow-md z-50" : "relative"
+        className={`w-full top-0 left-0 z-50 transition-all duration-300 ${
+          isScrolled ? "fixed shadow-md bg-white" : "sticky"
         }`}
       >
         <TrainMovement />
