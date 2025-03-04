@@ -5,3 +5,4 @@ const TimeTablePage = () => {
 };
 
 export default TimeTablePage;
+
