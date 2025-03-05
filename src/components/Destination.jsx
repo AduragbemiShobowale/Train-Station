@@ -34,7 +34,7 @@ function Destinations() {
         </p>
       </div>
 
-      <div className="grid gap-6 md:gap-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 cursor-pointer max-w-5xl mx-auto">
+      <div className="grid gap-6 md:gap-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 cursor-pointer max-w-6xl mx-auto">
         {destinations.map((destination, index) => (
           <div
             key={index}
