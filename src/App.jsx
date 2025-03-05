@@ -3,7 +3,7 @@ import "./App.css";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import ContactUsPage from "./pages/ContactUsPage";
-import TimeTablePage from "./pages/TimeTablePage";
+import TimeTablePage from "./pages/timeTable/TimeTablePage";
 import FaqPage from "./pages/FaqPage";
 import Register from "./pages/Auth/register/Register";
 import Login from "./pages/Auth/Login/Login";
@@ -12,7 +12,6 @@ import MainLayout from "./layouts/MainLayouts";
 import AuthLayout from "./layouts/AuthLayouts";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-
 function App() {
   return (
     <>
