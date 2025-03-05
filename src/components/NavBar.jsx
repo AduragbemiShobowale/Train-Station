@@ -32,8 +32,11 @@ export default function NavBar() {
     <>
       {/* Placeholder to prevent content shift when navbar becomes fixed */}
       {isScrolled && <div className="h-0"></div>}
-      <div className={`w-full top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? "sticky shadow-md bg-white" : "relative"}`}>
-
+      <div
+        className={`w-full top-0 left-0 z-50 transition-all duration-300 ${
+          isScrolled ? "sticky shadow-md bg-white" : "relative"
+        }`}
+      >
         <TrainMovement />
         <Disclosure
           as="nav"
@@ -45,7 +48,9 @@ export default function NavBar() {
                 <div className="relative flex h-16 items-center justify-between">
                   {/* Logo */}
                   <div className="flex items-center">
-                    <img alt="Your Company" src={TrainLogo} />
+                    <a href="/">
+                      <img alt="Your Company" src={TrainLogo} />
+                    </a>
                   </div>
 
                   {/* Mobile Menu Button */}
