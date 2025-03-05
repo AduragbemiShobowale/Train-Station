@@ -42,7 +42,7 @@ function Destinations() {
           >
             <img
               src={destination.image}
-              alt= " "
+              alt=" "
               className="w-full h-94 object-cover"
             />
             <div className="p-4 absolute bottom-0 left-0 right-0 text-white-900">

@@ -17,8 +17,10 @@ function HomePage() {
         </div>
       </div>
       <Destinations />
+      <OurServices />
     </div>
   );
 }
+
 
 export default HomePage;
