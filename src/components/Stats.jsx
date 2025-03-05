@@ -1,23 +1,35 @@
 import React from "react";
-import "./Stats.jsx";
-import "./Stats.css";
 
 const Stats = () => {
   return (
-    <div className="main-container">
-      <div className="stat-element md:flex md:gap-3">
-        <span className="figures">100k+</span>
-        <span className="text text-start">Happy Customers</span>
+    <section className="bg-[#006B14] flex justify-center items-center mx-5 md:mx-0">
+      <div className="max-w-7xl w-full mx-auto px-4 lg:px-15 flex flex-col md:flex-row justify-evenly items-center text-white">
+        <div className="flex flex-col items-center text-center p-4 md:w-1/3 md:flex-row md:items-center justify-center gap-3">
+          <span className="block text-[36px] md:text-[50px] font-bold mb-2">
+            100k+
+          </span>
+          <span className="text-[20px] md:text-[20px] md:w-19 md:text-start">
+            Happy Customers
+          </span>
+        </div>
+        <div className="flex flex-col items-center text-center p-4 md:w-1/3 md:flex-row md:items-center justify-center gap-3">
+          <span className="block text-[36px] md:text-[50px] font-bold mb-2">
+            140+
+          </span>
+          <span className="text-[20px] md:text-[20px] md:w-19 md:text-start">
+            Routes Covered
+          </span>
+        </div>
+        <div className="flex flex-col items-center text-center p-4 md:w-1/3 md:flex-row md:items-center justify-center gap-3">
+          <span className="block text-[36px] md:text-[50px] font-bold mb-2">
+            140+
+          </span>
+          <span className="text-[20px] md:text-[20px] md:w-19 md:text-start">
+            Routes Covered
+          </span>
+        </div>
       </div>
-      <div className="stat-element md:flex items-center md:gap-3">
-        <span className="figures">140+</span>
-        <span className="text text-start md:w-3">Routes Covered</span>
-      </div>
-      <div className="stat-element md:flex items-center md:gap-3">
-        <span className="figures">140+</span>
-        <span className="text text-start md:w-3">Routes Covered</span>
-      </div>
-    </div>
+    </section>
   );
 };
 

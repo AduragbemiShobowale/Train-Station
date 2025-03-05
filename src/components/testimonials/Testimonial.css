@@ -1,0 +1,28 @@
+.swiper-button-prev,
+.swiper-button-next {
+  color: #000; /* Customize navigation arrow color */
+}
+
+.swiper-pagination-bullet-active {
+  background-color: green !important; /* Customize active dot color */
+}
+
+.testimonial-container {
+  background-color: #f9f9f9;
+}
+
+.testimonial-card {
+  max-width: 350px;
+  text-align: center;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Force each slide to display as flex and stretch to match tallest card in a row */
+.swiper-slide {
+  display: flex !important;
+  align-items: stretch !important;
+  justify-content: center; /* Centers the card horizontally if needed */
+}
