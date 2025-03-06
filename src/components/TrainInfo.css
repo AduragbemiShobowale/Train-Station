@@ -1,0 +1,59 @@
+
+.full-container {
+  display: flex;
+  flex-direction: column; /* Default: Column for all smaller screens (mobile & tablets) */
+  align-items: center;
+  gap: 24px;
+}
+
+.card-train,
+.card-eticket {
+  width: 100%;
+  max-width: 590px;
+  height: 300px;
+  border-radius: 10px;
+  align-items: center;
+  padding: 20px;
+  background-size: cover;
+  background-position: center;
+}
+
+.card-train {
+  background-image: url("../assets/image/Frame 40989.png");
+}
+
+.card-eticket {
+  color: white;
+  background-image: url("../assets/image/Frame 40990.png");
+}
+
+h3 {
+  font-family: sans-serif;
+  font-size: 32px;
+}
+
+p {
+  font-family: sans-serif;
+  font-size: 20px;
+}
+
+.moreText {
+  width: 55%;
+}
+
+.know-more {
+  color: black;
+  background-color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Desktop (1024px and above) - Row layout */
+@media (min-width: 1024px) {
+  .full-container {
+    flex-direction: row; /* Row layout only for large screens */
+    justify-content: center;
+  }
+}
