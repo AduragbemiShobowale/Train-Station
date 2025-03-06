@@ -7,7 +7,7 @@
   margin: 50px auto;
   border-radius: 16px;
   width: 80%;
-  max-width: 80rem; /* Fixed max-width (matches max-w-7xl) */
+  max-width: 70rem; /* Fixed max-width (matches max-w-7xl) */
   padding: 20px;
   box-sizing: border-box;
 }

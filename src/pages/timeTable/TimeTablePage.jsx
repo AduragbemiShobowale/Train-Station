@@ -1,5 +1,6 @@
 import React from "react";
 import trainData from "./TimeTable";
+import RailwayCompanion from "../../components/RailwayCompanion";
 
 const TimeTablePage = () => {
   return (
@@ -50,6 +51,7 @@ const TimeTablePage = () => {
           </div>
         ))}
       </div>
+      <RailwayCompanion />
     </div>
   );
 };
