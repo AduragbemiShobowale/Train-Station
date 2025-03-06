@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
-import ContactUsPage from "./pages/ContactUsPage";
+import ContactUsPage from "./pages/contact/ContactUsPage";
 import TimeTablePage from "./pages/timeTable/TimeTablePage";
 import FaqPage from "./pages/FaqPage";
 import Register from "./pages/Auth/register/Register";
