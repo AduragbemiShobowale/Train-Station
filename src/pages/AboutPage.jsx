@@ -10,7 +10,7 @@ const AboutPage = () => {
     <div>
       <div className="mainContainer">
         <div className="contentText">
-          <h className="about">
+          <h1 className="about">
             <b>About NRC</b>{" "}
           </h1>
           <p className="railway md:w-[45%]  ">
