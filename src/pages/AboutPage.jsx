@@ -23,6 +23,7 @@ const AboutPage = () => {
       <OurMissionPage />
       <Stats />
       <Testimonial />
+      <RailwayCompanion />
     </div>
   );
 };
