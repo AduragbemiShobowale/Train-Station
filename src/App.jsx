@@ -12,7 +12,6 @@ import MainLayout from "./layouts/MainLayouts";
 import AuthLayout from "./layouts/AuthLayouts";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-
 function App() {
   return (
     <>

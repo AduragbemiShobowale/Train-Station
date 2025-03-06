@@ -31,12 +31,9 @@ export default function NavBar() {
   return (
     <>
       {/* Placeholder to prevent content shift when navbar becomes fixed */}
-      {isScrolled && <div className="h-16"></div>}
-      <div
-        className={`w-full ${
-          isScrolled ? "fixed top-0 left-0 shadow-md z-50" : "relative"
-        }`}
-      >
+      {isScrolled && <div className="h-0"></div>}
+      <div className={`w-full top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? "sticky shadow-md bg-white" : "relative"}`}>
+
         <TrainMovement />
         <Disclosure
           as="nav"
@@ -44,7 +41,7 @@ export default function NavBar() {
         >
           {({ open }) => (
             <>
-              <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+              <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-15">
                 <div className="relative flex h-16 items-center justify-between">
                   {/* Logo */}
                   <div className="flex items-center">
@@ -87,7 +84,7 @@ export default function NavBar() {
                       Register
                     </a>
                     <a
-                      href="/signin"
+                      href="/login"
                       className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700"
                     >
                       Sign In
@@ -118,7 +115,7 @@ export default function NavBar() {
                       Register
                     </a>
                     <a
-                      href="/signin"
+                      href="/login"
                       className="block w-full text-center rounded-md bg-green-600 px-3 py-2 text-base font-medium text-white hover:bg-green-700"
                     >
                       Sign In

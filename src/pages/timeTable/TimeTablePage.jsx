@@ -4,7 +4,7 @@ import trainData from "./TimeTable";
 const TimeTablePage = () => {
   return (
     <div className="px-4 py-10 bg-[#FFFFFF]">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl lg:px-15 mx-auto">
         {trainData.trains.map((train, index) => (
           <div key={index} className="mb-6 p-4 rounded-lg">
             <h2 className="text-2xl font-bold">{train.route}</h2>

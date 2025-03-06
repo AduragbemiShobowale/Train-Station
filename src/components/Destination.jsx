@@ -34,7 +34,7 @@ function Destinations() {
         </p>
       </div>
 
-      <div className="grid gap-6 md:gap-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 cursor-pointer max-w-5xl mx-auto">
+      <div className="grid gap-6 md:gap-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 cursor-pointer max-w-6xl mx-auto">
         {destinations.map((destination, index) => (
           <div
             key={index}
@@ -42,7 +42,7 @@ function Destinations() {
           >
             <img
               src={destination.image}
-              alt= " "
+              alt=" "
               className="w-full h-94 object-cover"
             />
             <div className="p-4 absolute bottom-0 left-0 right-0 text-white-900">
