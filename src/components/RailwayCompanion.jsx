@@ -9,17 +9,22 @@ const RailwayCompanion = () => {
     <div className="mainBody">
       <div className="majorContent">
         <div className="heading">
-          <h1>Your Railway Companion,</h1>
-          <h1> Anytime, Anywhere</h1>
+          <h1 className="lg:text-[42px] md:text-[28px] text-[20px]">
+            Your Railway Companion,
+          </h1>
+          <h1 className="lg:text-[42px] md:text-[28px] text-[20px]">
+            {" "}
+            Anytime, Anywhere
+          </h1>
         </div>
         <div className="scan">
-          <img className="qrCode" src={scanImage} alt="" />
+          <img className="qrCode" src={scanImage} alt="QR Code" />
           <div className="scanText">
             <p className="download">Scan to download the NRC app now.</p>
             <p className="available">Available on Play Store and App Store</p>
             <div className="appPlay">
-              <img className="apple" src={appleLogo} alt="" />
-              <img className="play" src={playstore} alt="" />
+              <img className="apple" src={appleLogo} alt="Apple Store" />
+              <img className="play" src={playstore} alt="Play Store" />
             </div>
           </div>
         </div>
