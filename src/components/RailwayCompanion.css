@@ -1,0 +1,117 @@
+.mainBody {
+  background: url("../assets/image/Frame 41010.png") no-repeat center/cover;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 30vh;
+  margin: 50px auto;
+  border-radius: 16px;
+  width: 90%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.majorContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  width: 100%;
+}
+
+.heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: start;
+  padding: 10px;
+  color: white;
+  max-width: 100%;
+}
+
+/* QR Code and Download Section */
+.scan {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  border: 1px solid white;
+  align-items: center; /* Ensures vertical alignment */
+  padding: 20px;
+  border-radius: 20px;
+  margin-top: 10px;
+  max-width: 600px;
+  width: 60%;
+}
+
+.scanText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  flex: 1;
+}
+
+.appPlay {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-self: flex-start; /* Prevents icons from shifting */
+}
+
+.qrCode {
+  max-width: 100px;
+  height: auto;
+}
+
+.apple,
+.play {
+  width: 30px;
+  height: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mainBody {
+    background: none;
+    background-color: rgba(0, 107, 20, 1);
+    flex-direction: column;
+    width: 90%;
+    padding: 20px;
+  }
+
+  .majorContent {
+    text-align: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .heading {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .scan {
+    flex-direction: row; /* Stack elements vertically */
+    align-items: center;
+    width: 100%;
+    text-align: center;
+  }
+
+  .scanText {
+    text-align: start;
+    align-items: center;
+  }
+
+  .appPlay {
+    justify-content: start; /* Ensures icons stay centered */
+    align-self: start; /* Fixes alignment issue */
+  }
+
+  .qrCode {
+    width: 80px;
+  }
+
+  .apple,
+  .play {
+    width: 25px;
+  }
+}
