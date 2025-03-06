@@ -5,7 +5,7 @@ import checkIcon from "../assets/icon/Vector.png";
 const OurMission = () => {
   return (
     <section className="max-w-7xl mx-auto px-4 lg:px-15 py-10">
-      <div className="flex flex-col lg:flex-row items-start gap-8">
+      <div className="flex flex-col lg:flex-row items-center gap-8">
      
         <div className="w-full lg:w-auto lg:max-w-[450px]">
         

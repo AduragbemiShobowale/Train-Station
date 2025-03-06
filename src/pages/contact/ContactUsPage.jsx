@@ -2,6 +2,7 @@ import React from "react";
 import "./ContactUsPage.css";
 import ContactSection from "./ContactSection";
 import GoogleMapComponent from "./googleMap/GoogleMapComponent";
+import RailwayCompanion from "../../components/RailwayCompanion";
 // import motionTrain from "../assets/image/blurtrain.png.png";
 
 const ContactUsPage = () => {
@@ -18,6 +19,7 @@ const ContactUsPage = () => {
       </div>
       <ContactSection />
       <GoogleMapComponent />
+      <RailwayCompanion />
     </div>
   );
 };
