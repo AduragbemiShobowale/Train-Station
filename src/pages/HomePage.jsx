@@ -1,5 +1,6 @@
 import React from "react";
 import Destinations from "../components/Destination";
+import OurServices from "../components/OurServices";
 import "./HomePage.css";
 
 function HomePage() {
@@ -21,6 +22,5 @@ function HomePage() {
     </div>
   );
 }
-
 
 export default HomePage;

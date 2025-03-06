@@ -32,15 +32,15 @@ const services = [
 
 const Services = () => {
   return (
-    <section className=" mx-auto pt-12 text-center bg-green-50">
-      <h2 className="text-2xl font-bold text-center mb-5 ">
+    <section className=" mx-auto pt-12 text-center bg-[#F0F7F6]">
+      <h2 className="text-[52px] font-bold text-center mb-5 ">
         Discover our Services
       </h2>
-      <p className="text-gray-600 text-center text-sm mb-5 mx-auto px-5 pb-6">
+      <p className="text-gray-600 text-center text-[22px] mb-5 mx-auto px-20 pb-6">
         Experience a new standard of rail travel with our comprehesive range of
         services designed for your comfort and convenience.
       </p>
-      <div className=" grid grid-cols-1 item-center md:grid-cols-4 gap-4 max-w-5xl mx-auto px-[46.7px] md:px-0">
+      <div className=" grid grid-cols-1 item-center md:grid-cols-4 gap-4 max-w-6xl mx-auto px-[46.7px] md:px-0">
         {services.map((service, index) => (
           <ServiceCard key={index} {...service} />
         ))}
