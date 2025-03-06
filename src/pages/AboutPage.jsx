@@ -1,5 +1,6 @@
 import React from "react";
 import OurMissionPage from "../components/OurMissionPage";
+import RailwayCompanion from "../components/RailwayCompanion";
 import Stats from "../components/Stats";
 import "../pages/AboutPage.css";
 import Testimonial from "../components/testimonials/Testimonial";
@@ -22,6 +23,7 @@ const AboutPage = () => {
       <OurMissionPage />
       <Stats />
       <Testimonial />
+      <RailwayCompanion />
     </div>
   );
 };
