@@ -1,0 +1,70 @@
+.full-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+/* Shared Card Styles */
+.card {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  max-width: 590px;
+  height: 250px;
+  border-radius: 10px;
+  padding: 24px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+/* Background Images */
+.card-train {
+  background-image: url("../assets/image/Frame 40989.png");
+}
+
+.card-eticket {
+  color: white;
+  background-image: url("../assets/image/Frame 40990.png");
+}
+
+/* Card Content */
+.card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  max-width: 80%;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.description {
+  font-size: 16px;
+  margin: 8px 0 16px;
+}
+
+.know-more {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  width: 50%;
+}
+
+/* Desktop (1024px and above) */
+@media (min-width: 1024px) {
+  .full-container {
+    flex-direction: row;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,122 @@
+.mainBody {
+  background: url("../assets/image/Frame 41010.png") no-repeat center/cover;
+  display: flex;
+  justify-content: center; /* Centers content */
+  align-items: center;
+  min-height: 15vh;
+  margin: 50px auto;
+  border-radius: 16px;
+  width: 80%;
+  max-width: 70rem; /* Fixed max-width (matches max-w-7xl) */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.majorContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  width: 100%;
+}
+
+.heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: start;
+  padding: 10px;
+  color: white;
+  max-width: 100%;
+}
+
+/* QR Code and Download Section */
+.scan {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  border: 1px solid white;
+  align-items: center;
+  padding: 20px;
+  border-radius: 20px;
+  margin-top: 10px;
+  max-width: 600px;
+  width: 70%;
+}
+
+.scanText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  flex: 1;
+}
+
+.appPlay {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  align-self: flex-start;
+}
+
+.qrCode {
+  max-width: 100px;
+  height: auto;
+}
+
+.apple,
+.play {
+  width: 30px;
+  height: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mainBody {
+    background: none;
+    background-color: rgba(0, 107, 20, 1);
+    flex-direction: column;
+    width: 90%;
+    padding: 20px;
+  }
+
+  .majorContent {
+    text-align: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .heading {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .scan {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    text-align: start;
+    gap: 30px;
+  }
+
+  .scanText {
+    text-align: start;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .appPlay {
+    justify-content: flex-start;
+    align-self: flex-start;
+  }
+
+  .qrCode {
+    width: 80px;
+  }
+
+  .apple,
+  .play {
+    width: 25px;
+  }
+}
