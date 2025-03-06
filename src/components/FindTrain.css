@@ -1,0 +1,127 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.train-search-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+/* Input Group Styling */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 250px; /* Prevents date field from shrinking too much */
+}
+
+label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #6c757d;
+}
+
+/* Input Fields */
+select,
+input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: black;
+  color: white;
+  width: 100%;
+}
+
+.NAJ,
+.Sedn,
+.Nba {
+  background-color: white;
+  color: black;
+}
+
+/* Preventing overlap of the date input */
+.date-input {
+  display: flex;
+  position: relative;
+}
+
+.calendar-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Button Styling */
+.find-train-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  min-width: 150px; /* Ensures button doesn't shrink */
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Button Hover Effect */
+.find-train-btn:hover {
+  background-color: #218838;
+}
+
+/* --- Mobile Responsive Styling --- */
+@media (max-width: 768px) {
+  .train-search-container {
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 400px;
+    padding: 20px;
+  }
+
+  .input-group {
+    min-width: 100%;
+  }
+
+  .find-train-btn {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .train-search-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    max-width: 700px;
+  }
+
+  .input-group {
+    flex: 1 1 45%;
+    min-width: 45%;
+  }
+
+  .find-train-btn {
+    width: auto;
+    min-width: 200px;
+  }
+}

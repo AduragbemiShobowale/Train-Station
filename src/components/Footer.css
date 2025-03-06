@@ -1,0 +1,157 @@
+bod {
+  height: 100vh;
+}
+.mainCons {
+  height: 100%;
+  background-color: #f0f7f6;
+  padding-bottom: 20px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* FLEXBOX FOR DESKTOP */
+.main {
+  margin: 100px 0;
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+/* Centering mainCon1 in mobile */
+.mainCon1 {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centering */
+  justify-content: center;
+  text-align: center; /* Ensuring text stays centered */
+  /* padding-left: 30%; */
+  padding-bottom: 10px;
+}
+
+@media (width > 768px) {
+  .mainCon1 {
+    align-items: start;
+  }
+}
+
+.Trainlogo,
+p {
+  padding-bottom: 10px;
+}
+
+.Trainlogo img {
+  width: 150px;
+}
+
+.Trainlogo {
+  display: flex;
+  align-items: center;
+}
+
+.Trainlogo {
+  width: 150px;
+}
+
+/* .HGsgimg {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+} */
+
+.HGsgimg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.HGsgimg img {
+  width: 25px;
+  height: 25px;
+  padding-bottom: 5px;
+}
+
+.mainCon2 {
+  flex: 2;
+  width: 100%;
+}
+
+.locale {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.Company,
+.tickets,
+.lagos,
+.ibadan {
+  flex: 1;
+  min-width: 150px;
+}
+
+h3,
+h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+hr {
+  border: none;
+
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
+}
+
+.copyright {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 12px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* MOBILE FIXES */
+@media (max-width: 768px) {
+  .main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mainCon1 {
+    text-align: center;
+  }
+
+  .locale {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .copyright {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .Mtab {
+    text-align: center;
+  }
+}
