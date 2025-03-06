@@ -7,7 +7,7 @@ import "../components/RailwayCompanion.css";
 const RailwayCompanion = () => {
   return (
     <div className="mainBody">
-      <div className="majorContent">
+      <div className="majorContent ">
         <div className="heading">
           <h1 className="lg:text-[42px] md:text-[28px] text-[20px]">
             Your Railway Companion,

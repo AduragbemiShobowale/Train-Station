@@ -3,7 +3,7 @@ import "./TrainInfo.css";
 
 const TrainInfo = () => {
   return (
-    <section className="full-container max-w-7xl mx-auto flex flex-col lg:flex-row justify-center gap-6 px-6 md:px-20">
+    <section className="full-container max-w-7xl mx-auto flex flex-col lg:flex-row justify-center gap-6 px-6 md:px-20 p-20">
       <div className="card card-train">
         <div className="card-content">
           <h3 className="title">Changes to Train Times</h3>

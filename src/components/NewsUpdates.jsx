@@ -1,6 +1,6 @@
 import "./NewsUpdates.css";
-import TrainOnTrack from "./assets/TrainOnTrack.png"; // Importing local images
-import ExpressService from "./assets/ExpressService.png";
+import TrainOnTrack from "../assets/image/Frame 40999.png"; // Importing local images
+import ExpressService from "../assets/image/image.png";
 
 const newsData = [
   {
