@@ -33,7 +33,7 @@ const services = [
 const Services = () => {
   return (
     <section className=" mx-auto pt-12 text-center bg-[#F0F7F6]">
-      <h2 className="text-[52px] font-bold text-center mb-5 ">
+      <h2 className="md:text-[52px] text-[28px] font-bold text-center mb-5 ">
         Discover our Services
       </h2>
       <p className="text-gray-600 text-center text-[22px] mb-5 mx-auto px-20 pb-6">

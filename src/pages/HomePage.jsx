@@ -3,6 +3,7 @@ import Destinations from "../components/Destination";
 import OurServices from "../components/OurServices";
 import TrainInfo from "../components/TrainInfo";
 import "./HomePage.css";
+import RailwayCompanion from "../components/RailwayCompanion";
 
 function HomePage() {
   return (
@@ -21,6 +22,7 @@ function HomePage() {
       <Destinations />
       <OurServices />
       <TrainInfo />
+      <RailwayCompanion />
     </div>
   );
 }
