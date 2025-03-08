@@ -12,6 +12,7 @@ import MainLayout from "./layouts/MainLayouts";
 import AuthLayout from "./layouts/AuthLayouts";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
+import SearchTrain from "./pages/searchTrain/SearchTrain";
 function App() {
   return (
     <>
@@ -24,12 +25,13 @@ function App() {
             <Route path="/contactus" element={<ContactUsPage />} />
             <Route path="/timetable" element={<TimeTablePage />} />
             <Route path="/faq" element={<FaqPage />} />
+            <Route path="/searchTrain" element={<SearchTrain />} />
           </Route>
 
           {/* Routes without Navbar & Footer */}
           <Route element={<AuthLayout />}>
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Register />} />
+            <Route path="/signin" element={<Login />} />
             <Route path="/forgot-password" element={<ForgetPassword />} />
           </Route>
         </Routes>
