@@ -22,9 +22,9 @@ const destinations = [
 
 function Destinations() {
   return (
-    <section className="px-4 md:px-12  py-10 bg-gray-200 ">
+    <section className="px-4 md:px-12  py-10 bg-gray-200 pt-[15rem] md:pt-30 ">
       <div className="text-center mb-6">
-        <h2 className="md:text-[52px] text-[28px] md:text-4xl font-bold text-gray-900">
+        <h2 className="md:text-[52px] text-[26px] font-bold text-gray-900">
           Explore Popular Destinations
         </h2>
         <p className="text-gray-600 text-center text-[14px] md:text-[22px] mt-5 justify-center max-w-3xl mx-auto">
@@ -38,7 +38,7 @@ function Destinations() {
         {destinations.map((destination, index) => (
           <div
             key={index}
-            className="relative text-white bg-white rounded-lg shadow-xl overflow-hidden hover:shadow-2xl transition-shadow"
+            className="relative text-white rounded-lg shadow-xl overflow-hidden hover:shadow-2xl transition-shadow"
           >
             <img
               src={destination.image}

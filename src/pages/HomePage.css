@@ -3,7 +3,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
-  /* min-height: 1vh; */
+  min-height: 55vh;
   height: auto;
   background-position: center;
   background-attachment: fixed;
@@ -11,7 +11,7 @@
 
 @media (min-width: 700px) {
   .mainCont {
-    /* min-height: 28rem; Adjusted for better scaling */
+    min-height: 28rem; 
     height: auto;
   }
 }

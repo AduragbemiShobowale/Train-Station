@@ -5,6 +5,7 @@ import TrainInfo from "../components/TrainInfo";
 import "./HomePage.css";
 import RailwayCompanion from "../components/RailwayCompanion";
 import NewsUpdates from "../components/NewsUpdates";
+import FindTrain from "../components/FindTrain";
 
 function HomePage() {
   return (
@@ -21,6 +22,7 @@ function HomePage() {
             </p>
           </div>
         </div>
+        <FindTrain />
         <Destinations />
         <OurServices />
         <TrainInfo />
