@@ -114,13 +114,13 @@ export default function NavBar() {
                   {/* Register and Sign In Buttons in Mobile Menu */}
                   <div className="mt-4 space-y-2">
                     <a
-                      href="/register"
+                      href="/signup"
                       className="block w-full text-center rounded-md border border-green-600 px-3 py-2 text-base font-medium text-green-600 hover:bg-green-100"
                     >
                       Register
                     </a>
                     <a
-                      href="/login"
+                      href="/signin"
                       className="block w-full text-center rounded-md bg-green-600 px-3 py-2 text-base font-medium text-white hover:bg-green-700"
                     >
                       Sign In
