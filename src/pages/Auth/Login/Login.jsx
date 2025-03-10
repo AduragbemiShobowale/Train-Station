@@ -1,84 +1,109 @@
 import React from "react";
-import signUpImage from "../../../assets/image/signUp.png";
+import loginImage from "../../../assets/image/signUp.png"; // Replace with your actual login image path
 import trainLogo from "../../../assets/icon/TrainLogo.png";
-import { LuEyeOff } from "react-icons/lu";
+import { LuEye, LuEyeOff } from "react-icons/lu";
 import "./Login.css";
 
 const Login = () => {
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
-      {/* Left Side: Form Container */}
-      <div className="w-full lg:w-1/2 ">
-        {/* Mobile Logo */}
-        <div className="lg:hidden bg-white">
-          <img src={trainLogo} alt="NRC Logo" className="pl-4" />
-        </div>
+    <div className="min-h-screen flex flex-col lg:flex-row-reverse relative register">
+      {/* Image Background for Desktop */}
+      <div className="lg:w-1/2 hidden lg:block relative">
+        <img
+          src={loginImage}
+          alt="Train"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      </div>
 
-        {/* Form Section */}
-        <section className="form-section2 mt-10 p-6 bg-white p-4">
-          <div className="text-left rounded-t-lg lg:text-left">
-            <h1 className="text-2xl font-bold mt-5">Welcome Back</h1>
-            <p className="text-sm text-gray-600 my-4">Sign in to continue</p>
-          </div>
+      {/* Main Content Container */}
+      <main className="flex flex-col justify-between lg:w-1/2 bg-white register">
+        {/* Header with Logo */}
+        <header className="p-5 lg:p-8 bg-white lg:hidden">
+          <a href="/">
+            <img src={trainLogo} alt="NRC Logo" className="h-10" />
+          </a>
+        </header>
+        <header className="p-5 lg:p-8 lg:absolute left-[50%] hidden lg:block">
+          <a href="/">
+            <img src={trainLogo} alt="NRC Logo" className="h-10" />
+          </a>
+        </header>
 
-          <form className="rounded-b-lg">
-            {/* Grid Layout for Form Fields */}
+        {/* Form Container */}
+        <div className="p-8 lg:p-12 bg-white w-[95%] md:w-[80%] mx-auto mt-12 lg:w-full rounded-lg lg:rounded-none">
+          <h1 className="text-3xl font-bold mb-4">Welcome Back</h1>
+          <p className="text-gray-600 mb-8">Sign in to continue</p>
 
-            <div className="grid grid-cols-1 mb-4">
-              <div className="flex flex-col gap-2">
-                <label className="text-sm text-gray-700">Email</label>
-                <input
-                  type="email"
-                  placeholder="Enter email address"
-                  className="p-2 border border-gray-300 rounded-md"
-                />
-              </div>
+          {/* Form Fields */}
+          <form className="space-y-6">
+            {/* Email */}
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                placeholder="Enter your email address"
+                required
+              />
             </div>
 
-            <div className="grid grid-cols-1 mb-4">
-              {/* Password Input */}
-              <div className="flex flex-col gap-2 relative">
-                <label className="text-sm text-gray-700">Password</label>
+            {/* Password */}
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Password
+              </label>
+              <div className="relative">
                 <input
                   type="password"
-                  placeholder="Enter password"
-                  className="p-2 border border-gray-300 rounded-md pr-10" /* Add padding for icon */
+                  id="password"
+                  className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 pr-10"
+                  placeholder="Enter your password"
+                  required
                 />
-                <LuEyeOff className="eyeIconPassword absolute right-3 top-10 text-gray-500 cursor-pointer" />
+                <button type="button" className="absolute right-3 top-3">
+                  <LuEyeOff className="w-5 h-5 text-gray-400" />
+                </button>
               </div>
-
-              {/* Confirm Password Input */}
             </div>
 
-            <p>Forgot password?</p>
+            {/* Forgot Password Link */}
+            <div className="text-right">
+              <a
+                href="/forgot-password"
+                className="text-sm text-green-500 hover:underline"
+              >
+                Forgot Password?
+              </a>
+            </div>
 
             {/* Sign In Button */}
-            <button className="w-full bg-green-600 text-white py-3 rounded-md mt-6 hover:bg-green-700">
+            <button
+              type="submit"
+              className="w-full bg-green-500 text-white py-3 rounded-md font-medium hover:bg-green-600 transition duration-200"
+            >
               Sign In
             </button>
-
-            {/* Sign In Text */}
-            <p className="text-sm text-center mt-6">
-              Already have an account?{" "}
-              <a href="/register" className="text-green-600">
-                Sign Up
-              </a>
-            </p>
           </form>
-        </section>
-      </div>
 
-      {/* Right Side: Image Container (Hidden on Mobile) */}
-      <div className="hidden lg:block lg:w-1/2 relative">
-        <img
-          src={signUpImage}
-          alt="Train Image"
-          className="w-full h-screen object-cover"
-        />
-        <div className="absolute top-8 left-8">
-          <img src={trainLogo} alt="NRC Logo" className="h-12" />
+          {/* Sign Up Link */}
+          <div className="text-center mt-4">
+            <span className="text-gray-600">Don't have an account? </span>
+            <a href="/signup" className="text-green-500 hover:underline">
+              Sign Up
+            </a>
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 };
