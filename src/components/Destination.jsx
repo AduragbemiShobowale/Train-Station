@@ -22,12 +22,12 @@ const destinations = [
 
 function Destinations() {
   return (
-    <section className="px-4 md:px-12  py-10 bg-gray-200 ">
+    <section className="px-4 md:px-12  py-10 bg-gray-200 pt-[15rem] md:pt-30 ">
       <div className="text-center mb-6">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+        <h2 className="md:text-[52px] text-[26px] font-bold text-gray-900">
           Explore Popular Destinations
         </h2>
-        <p className="text-gray-600 text-center mt-5 justify-center max-w-3xl mx-auto">
+        <p className="text-gray-600 text-center text-[14px] md:text-[22px] mt-5 justify-center max-w-3xl mx-auto">
           Discover the beauty and diversity of Nigeria through our extensive
           rail network. From bustling city centers to cultural landmarks, our
           trains connect you to the nation’s most captivating destinations.
@@ -38,18 +38,20 @@ function Destinations() {
         {destinations.map((destination, index) => (
           <div
             key={index}
-            className="relative text-white bg-white rounded-lg shadow-xl overflow-hidden hover:shadow-2xl transition-shadow"
+            className="relative text-white rounded-lg shadow-xl overflow-hidden hover:shadow-2xl transition-shadow"
           >
             <img
               src={destination.image}
               alt=" "
-              className="w-full h-94 object-cover"
+              className="w-auto h-auto object-cover"
             />
             <div className="p-4 absolute bottom-0 left-0 right-0 text-white-900">
-              <h3 className="text-lg font-bold text-white-900">
+              <h3 className="md:text-[26.45px] text-[22px] font-bold text-white-900">
                 {destination.name}
               </h3>
-              <p className="text-white-900 font-thin">{destination.visitors}</p>
+              <p className="text-white-900 font-thin md:text-[17.71px] text-[14px] ">
+                {destination.visitors}
+              </p>
             </div>
           </div>
         ))}

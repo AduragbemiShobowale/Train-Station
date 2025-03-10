@@ -1,0 +1,160 @@
+/* FOOTER CONTAINER */
+.footer-container {
+  background-color: #f0f7f6;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+/* FLEXBOX LAYOUT FOR DESKTOP */
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* FOOTER LOGO SECTION */
+.footer-logo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* ✅ Left-align logo section for desktop */
+  text-align: left;
+  padding-right: 40px;
+}
+
+.footer-logo img {
+  width: 100%;
+}
+
+.footer-text {
+  margin-bottom: 10px;
+}
+
+/* SOCIAL ICONS */
+.social-icons {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-start; /* ✅ Left-align social icons for desktop */
+}
+
+.footer-links {
+  flex: 2;
+  display: flex;
+  justify-content: flex-start; /* ✅ Aligns links to the left */
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 40px;
+  margin-left: 40px;
+}
+
+/* Ensures each column is left-aligned */
+.footer-column {
+  flex: 1;
+  min-width: 150px;
+  text-align: left; /* ✅ Left-align text inside columns */
+}
+
+.footer-column h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column li {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.footer-column a {
+  text-decoration: none;
+  color: black;
+  transition: color 0.3s ease-in-out;
+}
+
+.footer-column a:hover {
+  color: #007bff;
+}
+
+/* DIVIDER */
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
+}
+
+/* COPYRIGHT SECTION */
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 12px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.notlink:hover {
+  color: grey;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .footer-logo {
+    padding-left: 50px;
+  }
+
+  .footer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 20px;
+    width: 100%;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .footer-column {
+    width: 100%; /* ✅ Makes sure each column takes full width */
+    text-align: center; /* ✅ Centers text properly */
+  }
+
+  .footer-column h3 {
+    text-align: center; /* ✅ Ensure headers are centered */
+  }
+
+  .footer-column ul {
+    padding: 0;
+  }
+
+  .footer-column li {
+    text-align: center;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+    width: 100%;
+  }
+}
