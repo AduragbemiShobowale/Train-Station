@@ -1,6 +1,7 @@
 import React from "react";
 import Destinations from "../components/Destination";
 import "./HomePage.css";
+import OurServices from "../components/OurServices ";
 
 function HomePage() {
   return (
@@ -21,6 +22,5 @@ function HomePage() {
     </div>
   );
 }
-
 
 export default HomePage;
