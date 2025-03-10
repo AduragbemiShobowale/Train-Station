@@ -33,7 +33,7 @@ const FindMyTrain = () => {
       </div>
 
       {/* Submit Button */}
-      <button className="bg-white text-[#18A532] font-semibold px-6 py-2 rounded w-full md:w-[30%] lg:w-[20%] md:mt-5">
+      <button className="bg-white text-[#18A532] hover:text-white hover:bg-[#18A532] font-semibold px-6 py-2 rounded w-full md:w-[30%] lg:w-[20%] md:mt-5">
         <a href="/searchTrain">Find My Train</a>
       </button>
     </div>
