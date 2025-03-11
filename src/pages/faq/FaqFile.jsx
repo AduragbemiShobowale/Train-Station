@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "../pages/FaqPage.css";
-import { CiSearch } from "react-icons/ci";
+import "./FaqFile.css";
 import { FaPlus, FaMinus } from "react-icons/fa";
+import NotFound from "./NotFound";
 
 const faqs = [
   {
@@ -11,14 +11,16 @@ const faqs = [
   },
   {
     question: "I have registered and logged in, how do I get a ticket?",
-    answer: `1. Select the Originating and Destination stations.
-      2. Select your desired journey date.
-      3. Click on the Find My Train button to show available trains.
-      4. Select train and coach (e.g. Business, Standard, First).
-      5. Click on the dropdown to see coach details.
-      6. Select coach, pick a seat, and fill in all passenger details.
-      7. Click on the Make Payment button to book your ticket.
-      Once completed, a QR-based ticket will be sent to your email.`,
+    answer: [
+      "1. Select the Originating and Destination stations.",
+      "2. Select your desired journey date.",
+      "3. Click on the Find My Train button to show available trains for your trip.",
+      "4. Select train and coach (e.g., Business, Standard, First).",
+      "5. Click on the dropdown under 'Please select a coach' to see coach details.",
+      "6. Select a coach, pick a seat, and fill in all passenger details.",
+      "7. After providing all the necessary information, click on the 'Make Payment' button to initiate the payment process and book your ticket.",
+      "Once you complete all the steps, a QR-based ticket will be generated and sent to your email. You can access your booked tickets in your booking history.",
+    ],
   },
   {
     question: "I forgot my password.",
@@ -61,42 +63,55 @@ const faqs = [
   },
 ];
 
-const FaqPage = () => {
+const FaqFile = ({ searchQuery }) => {
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggleFAQ = (index) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
   };
 
+  // Filter FAQs based on search query
+  const filteredFaqs = faqs.filter((faq) =>
+    faq.question.toLowerCase().includes((searchQuery || "").toLowerCase())
+  );
+
   return (
-    <div className="majorPage md:pt-32 lg:pt-12">
-      <div className="pageText">
-        <h1 className="FAQ">Frequently Asked Questions</h1>
-        <p className="help">Have Questions? We are here to help.</p>
-        <div className="search mx-auto md:w-[32%] lg:w-[60%]">
-          <input className="py-2 px-11" type="text" placeholder="Search..." />
-          <CiSearch className="searchIcon" />
-        </div>
-      </div>
-      
-      <div className="faq-container">
-        <div className="faq-box">
-          {faqs.map((faq, index) => (
+    <div className="faq-container">
+      <div className="faq-box">
+        {filteredFaqs.length > 0 ? (
+          filteredFaqs.map((faq, index) => (
             <div key={index} className="faq-item">
               <button className="faq-question" onClick={() => toggleFAQ(index)}>
                 <h2>{faq.question}</h2>
                 {openIndex === index ? <FaMinus /> : <FaPlus />}
               </button>
-              {openIndex === index && <p className="faq-answer">{faq.answer}</p>}
+              {openIndex === index && (
+                <div className="faq-answer">
+                  {Array.isArray(faq.answer) ? (
+                    <ul>
+                      {faq.answer.map((step, i) => (
+                        <li className="pb-3" key={i}>
+                          {step}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>{faq.answer}</p>
+                  )}
+                </div>
+              )}
             </div>
-          ))}
-        </div>
-        <p className="faq-footer">
-          Can't find the answer you are looking for? <span className="faq-link">Send us a message</span>
-        </p>
+          ))
+        ) : (
+          <NotFound />
+        )}
       </div>
+      <p className="faq-footer">
+        Can't find the answer you are looking for?{" "}
+        <span className="faq-link">Send us a message</span>
+      </p>
     </div>
   );
 };
 
-export default FaqPage;
+export default FaqFile;

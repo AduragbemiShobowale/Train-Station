@@ -40,7 +40,7 @@ const Services = () => {
         Experience a new standard of rail travel with our comprehesive range of
         services designed for your comfort and convenience.
       </p>
-      <div className=" grid grid-cols-1 item-center md:grid-cols-4 gap-4 max-w-6xl mx-auto px-[46.7px] md:px-5">
+      <div className=" grid grid-cols-1 item-center md:grid-cols-4 gap-10 max-w-6xl mx-auto px-[46.7px] md:px-5">
         {services.map((service, index) => (
           <ServiceCard key={index} {...service} />
         ))}

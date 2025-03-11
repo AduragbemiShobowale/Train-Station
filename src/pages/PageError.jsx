@@ -5,11 +5,11 @@ import back from "../assets/icon/Arrow-28.png";
 
 const PageError = () => {
   return (
-    <div className="errorContainer">
-      <div className="errorImage">
-        <img src={notFoundImage} alt="Robot" />
+    <div className="errorContainer flex flex-col justify-center items-center">
+      <div className="errorImage flex justify-center items-center">
+        <img src={notFoundImage} className="w-[80%]" alt="Robot" />
       </div>
-      <h1 className="error-message">Page not Found</h1>
+      <h1 className="error-messages">Page not Found</h1>
 
       <a href="/" className="goHome-text">
         <img src={back} alt="" /> Go home

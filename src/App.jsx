@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import ContactUsPage from "./pages/contact/ContactUsPage";
 import TimeTablePage from "./pages/timeTable/TimeTablePage";
-import FaqPage from "./pages/FaqPage";
+import FaqPage from "./pages/faq/FaqPage";
 import Register from "./pages/Auth/register/Register";
 import Login from "./pages/Auth/Login/Login";
 import ForgetPassword from "./pages/Auth/Forget Password/ForgetPassword";
@@ -13,7 +13,7 @@ import AuthLayout from "./layouts/AuthLayouts";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import SearchTrain from "./pages/searchTrain/SearchTrain";
-import BookingForm from "./pages/BookingForm";
+import BookingForm from "./pages/booking/BookingForm";
 import { SelectedTrainProvider } from "./contexts/SelectedTrainContext";
 import PageError from "./pages/PageError";
 
@@ -32,7 +32,6 @@ function App() {
               <Route path="/faq" element={<FaqPage />} />
               <Route path="/searchTrain" element={<SearchTrain />} />
               <Route path="/booking" element={<BookingForm />} />
-              <Route path="/error" element={<PageError />} />
             </Route>
 
             {/* Routes without Navbar & Footer */}
@@ -41,6 +40,9 @@ function App() {
               <Route path="/signin" element={<Login />} />
               <Route path="/forgot-password" element={<ForgetPassword />} />
             </Route>
+
+            {/* Error Page for undefined routes */}
+            <Route path="*" element={<PageError />} />
           </Routes>
         </Router>
       </SelectedTrainProvider>

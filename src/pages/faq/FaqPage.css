@@ -1,0 +1,170 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: #f8f9fa;
+  font-family: "Roboto", sans-serif;
+}
+
+.faq-box {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.faq-item {
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 15px 0;
+  cursor: pointer;
+  outline: none;
+}
+
+.faq-question h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+}
+
+.faq-answer {
+  margin-top: 10px;
+  text-align: left;
+  color: #555;
+  font-size: 15px;
+  padding: 10px;
+  line-height: 1.6;
+}
+
+.faq-footer {
+  margin-top: 20px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #263238;
+  text-align: center;
+}
+
+.faq-link {
+  color: #006b14;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.faq-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* 🔹 Mobile Responsiveness */
+@media (max-width: 600px) {
+  .faq-container {
+    padding: 20px 10px;
+  }
+
+  .faq-question {
+    font-size: 16px;
+    padding: 12px 0;
+  }
+
+  .faq-question h2 {
+    font-size: 16px;
+  }
+
+  .faq-answer {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .faq-footer {
+    font-size: 14px;
+  }
+}
+
+.majorPage {
+  background-image: url("../../assets/image/View of train at night.png");
+  background-repeat: no-repeat;
+  object-fit: cover;
+  background-size: cover;
+  width: 100%;
+  min-height: 50vh;
+  padding-top: 30px;
+  background-position: center;
+}
+
+@media (width > 728px) {
+  .majorPage {
+    min-height: 30vh;
+    padding-top: 30px;
+  }
+}
+
+@media (width > 1024px) {
+  .majorPage {
+    min-height: 18rem;
+
+  }
+}
+
+.pageText {
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  margin: auto;
+}
+
+.FAQ {
+  font-size: 40px;
+  font-weight: 500;
+}
+
+@media (width > 768px) {
+  .FAQ {
+    font-size: 62px;
+    font-weight: 600;
+  }
+}
+
+.help {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.search {
+  position: relative;
+  margin-top: 15px;
+  max-width: 400px;
+  color: black;
+}
+
+.search input {
+  width: 100%;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: hsla(0, 0%, 33%, 1);
+}
