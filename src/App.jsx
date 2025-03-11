@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import ContactUsPage from "./pages/contact/ContactUsPage";
 import TimeTablePage from "./pages/timeTable/TimeTablePage";
-import FaqPage from "./pages/FaqPage";
+import FaqPage from "./pages/faq/FaqPage";
 import Register from "./pages/Auth/register/Register";
 import Login from "./pages/Auth/Login/Login";
 import ForgetPassword from "./pages/Auth/Forget Password/ForgetPassword";
