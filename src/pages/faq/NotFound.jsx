@@ -1,5 +1,5 @@
 import React from "react";
-import notFound from "../assets/icon/Group 26795.png";
+import notFound from "../../assets/icon/Group 26795.png";
 
 const NotFound = () => {
   return (

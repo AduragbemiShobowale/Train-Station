@@ -84,13 +84,13 @@ export default function NavBar() {
                   <div className="hidden lg:flex lg:items-center lg:space-x-2">
                     <a
                       href="/signup"
-                      className="px-4 py-2 md:px-3 md:py-1 text-sm md:text-sm font-medium text-green-600 border border-green-600 rounded-md hover:bg-green-100"
+                      className="px-4 py-2 md:px-5 md:py-2 text-sm md:text-sm font-medium text-green-600 border border-green-600 rounded-md hover:bg-green-100"
                     >
                       Register
                     </a>
                     <a
                       href="/signin"
-                      className="px-4 py-2 md:px-3 md:py-1 text-sm md:text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700"
+                      className="px-4 py-2 md:px-6 md:py-2 text-sm md:text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700"
                     >
                       Sign In
                     </a>
