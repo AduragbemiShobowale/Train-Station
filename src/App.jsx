@@ -13,7 +13,7 @@ import AuthLayout from "./layouts/AuthLayouts";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import SearchTrain from "./pages/searchTrain/SearchTrain";
-import BookingForm from "./pages/BookingForm";
+import BookingForm from "./pages/booking/BookingForm";
 import { SelectedTrainProvider } from "./contexts/SelectedTrainContext";
 function App() {
   return (

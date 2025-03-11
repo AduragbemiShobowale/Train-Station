@@ -21,7 +21,7 @@ const RailwayCompanion = () => {
           <img className="qrCode" src={scanImage} alt="QR Code" />
           <div className="scanText">
             <p className="download">Scan to download the NRC app now.</p>
-            <p className="available">Available on Play Store and App Store</p>
+            <p className="availables">Available on Play Store and App Store</p>
             <div className="appPlay">
               <img className="apple" src={appleLogo} alt="Apple Store" />
               <img className="play" src={playstore} alt="Play Store" />

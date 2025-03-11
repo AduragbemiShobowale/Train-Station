@@ -9,7 +9,7 @@ import "./Testimonial.css";
 const Testimonial = () => {
   return (
     <div className="testimonial-container py-10 bg-gray-100">
-      <div className=" flex flex-col justify-center gap-4 items-center text-center">
+      <div className=" flex flex-col justify-center gap-4 items-center text-center pb-6">
         <h2 className="text-center text-4xl md:text-3xl font-bold">
           Testimonials
         </h2>
