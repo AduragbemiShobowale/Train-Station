@@ -32,7 +32,6 @@ function App() {
               <Route path="/faq" element={<FaqPage />} />
               <Route path="/searchTrain" element={<SearchTrain />} />
               <Route path="/booking" element={<BookingForm />} />
-              <Route path="/error" element={<PageError />} />
             </Route>
 
             {/* Routes without Navbar & Footer */}
@@ -41,6 +40,9 @@ function App() {
               <Route path="/signin" element={<Login />} />
               <Route path="/forgot-password" element={<ForgetPassword />} />
             </Route>
+
+            {/* Error Page for undefined routes */}
+            <Route path="*" element={<PageError />} />
           </Routes>
         </Router>
       </SelectedTrainProvider>
