@@ -96,3 +96,60 @@
     font-size: 14px;
   }
 }
+
+.majorPage {
+  background-image: url("../assets/image/View of train at night.png");
+  background-repeat: no-repeat;
+  object-fit: cover;
+  background-size: cover;
+  width: 100%;
+  height: 50vh;
+  background-position: center;
+}
+
+.pageText {
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  margin: auto;
+}
+
+.FAQ {
+  font-size: 40px;
+  font-weight: 500;
+}
+
+@media (width > 768px) {
+  .FAQ {
+    font-size: 62px;
+    font-weight: 600;
+  }
+}
+
+.help {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.search {
+  position: relative;
+  margin-top: 15px;
+  max-width: 400px;
+  color: black;
+}
+
+.search input {
+  width: 100%;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: hsla(0, 0%, 33%, 1);
+}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "./FaqPage.css";
+import "../pages/FaqPage.css";
+import { CiSearch } from "react-icons/ci";
 import { FaPlus, FaMinus } from "react-icons/fa";
 
 const faqs = [
@@ -60,7 +61,7 @@ const faqs = [
   },
 ];
 
-export default function FAQ() {
+const FaqPage = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggleFAQ = (index) => {
@@ -68,22 +69,34 @@ export default function FAQ() {
   };
 
   return (
-    <div className="faq-container">
-      <div className="faq-box">
-        {faqs.map((faq, index) => (
-          <div key={index} className="faq-item">
-            <button className="faq-question" onClick={() => toggleFAQ(index)}>
-              <h2>{faq.question}</h2>
-              {openIndex === index ? <FaMinus /> : <FaPlus />}
-            </button>
-            {openIndex === index && <p className="faq-answer">{faq.answer}</p>}
-          </div>
-        ))}
+    <div className="majorPage md:pt-32 lg:pt-12">
+      <div className="pageText">
+        <h1 className="FAQ">Frequently Asked Questions</h1>
+        <p className="help">Have Questions? We are here to help.</p>
+        <div className="search mx-auto md:w-[32%] lg:w-[60%]">
+          <input className="py-2 px-11" type="text" placeholder="Search..." />
+          <CiSearch className="searchIcon" />
+        </div>
       </div>
-      <p className="faq-footer">
-        Can't find the answer you are looking for?{" "}
-        <span className="faq-link">Send us a message</span>
-      </p>
+      
+      <div className="faq-container">
+        <div className="faq-box">
+          {faqs.map((faq, index) => (
+            <div key={index} className="faq-item">
+              <button className="faq-question" onClick={() => toggleFAQ(index)}>
+                <h2>{faq.question}</h2>
+                {openIndex === index ? <FaMinus /> : <FaPlus />}
+              </button>
+              {openIndex === index && <p className="faq-answer">{faq.answer}</p>}
+            </div>
+          ))}
+        </div>
+        <p className="faq-footer">
+          Can't find the answer you are looking for? <span className="faq-link">Send us a message</span>
+        </p>
+      </div>
     </div>
   );
-}
+};
+
+export default FaqPage;
