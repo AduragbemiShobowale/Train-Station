@@ -1,4 +1,3 @@
-// components/BookingForm.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelectedTrain } from "../../contexts/SelectedTrainContext";
@@ -11,6 +10,10 @@ const BookingForm = () => {
   const navigate = useNavigate();
   const { selectedTrain, setSelectedTrain, selectedClass, setSelectedClass } =
     useSelectedTrain();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // Add loading state
   const [isLoading, setIsLoading] = useState(true);
@@ -126,6 +129,7 @@ const BookingForm = () => {
       alert("Please complete contact details");
     }
 
+    // Validate seat selection
     if (!seatData.class || !seatData.coach || !seatData.seats.length) {
       isValid = false;
       alert("Please complete seat selection");
@@ -141,7 +145,7 @@ const BookingForm = () => {
       console.log("Booking Data:", bookingData);
       // Here you would typically send this data to your backend
       // For now, we'll just log it and navigate to a confirmation page
-      navigate("/confirmation");
+      navigate("/checkout", { state: { bookingData } });
     }
   };
 
@@ -272,6 +276,7 @@ const BookingForm = () => {
             <div>
               <label className="block mb-1 font-medium">Class</label>
               <select
+                disabled
                 value={seatData.class}
                 onChange={(e) => handleSeatDataChange("class", e.target.value)}
                 className="border p-2 w-full"
@@ -292,8 +297,8 @@ const BookingForm = () => {
                 className="border p-2 w-full"
               >
                 <option value="">Select Coach</option>
-                <option value="Coach 1">Coach 1</option>
-                <option value="Coach 2">Coach 2</option>
+                <option value="C01">C01</option>
+                <option value="C02">C02</option>
               </select>
             </div>
 
@@ -321,8 +326,8 @@ const BookingForm = () => {
             >
               <div className="flex justify-between items-center mb-2">
                 <h3 className="font-semibold">
-                  Passenger {idx + 1} - Coach No / Seat No:{" "}
-                  {seatData.seats?.[idx] || "Not selected"}
+                  Passenger {idx + 1} - Coach No / Seat No:
+                  {seatData.coach} / {seatData.seats?.[idx] || "Not selected"}
                 </h3>
                 {passengers.length > 1 && (
                   <button
