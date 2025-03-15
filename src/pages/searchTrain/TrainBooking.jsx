@@ -1,5 +1,5 @@
 // components/TrainBooking.js
-import React from "react";
+import React, { useEffect } from "react";
 import trainSchedules from "./trainSchedule";
 import FirstClassIcon from "../../assets/icon/firstClass.png";
 import BusinessClassIcon from "../../assets/icon/businessClass.png";
@@ -24,6 +24,10 @@ const getClassIcon = (type) => {
 const TrainBooking = () => {
   // 3) Destructure the set functions from our context
   const { setSelectedTrain, setSelectedClass } = useSelectedTrain();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // 4) useNavigate for routing
   const navigate = useNavigate();
