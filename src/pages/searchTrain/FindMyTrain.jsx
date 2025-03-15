@@ -24,7 +24,7 @@ const FindMyTrain = () => {
       </div>
 
       {/* Date Picker */}
-      <div className="flex flex-col w-full md:w-1/4">
+      <div className="flex flex-col w-full lg:w-1/4">
         <label className="text-white font-medium">Date</label>
         <input
           type="date"
