@@ -5,6 +5,7 @@ import FindMyTrain from "../searchTrain/FindMyTrain";
 import SeatSelectorModal from "./seatSelector/SeatSelectorModal";
 import Lefticon from "../../assets/icon/left.png";
 import Righticon from "../../assets/icon/right.png";
+import { SEAT_CONFIG } from "./seatConfig";
 
 const BookingForm = () => {
   const navigate = useNavigate();
@@ -42,7 +43,24 @@ const BookingForm = () => {
 
   // Helpers for seat data
   const handleSeatDataChange = (field, value) => {
-    setSeatData((prev) => ({ ...prev, [field]: value }));
+    setSeatData((prev) => ({
+      ...prev,
+      [field]: value,
+      // Reset seats when class or coach changes
+      ...(field === "class" || field === "coach" ? { seats: [] } : {}),
+    }));
+  };
+
+  // Get coach options based on selected class
+  const getCoachOptions = () => {
+    if (!seatData.class || !SEAT_CONFIG[seatData.class]) {
+      return [];
+    }
+    return SEAT_CONFIG[seatData.class].coaches.map((coach) => (
+      <option key={coach} value={coach}>
+        {coach}
+      </option>
+    ));
   };
 
   // Helpers for passengers
@@ -132,7 +150,7 @@ const BookingForm = () => {
     // Validate seat selection
     if (!seatData.class || !seatData.coach || !seatData.seats.length) {
       isValid = false;
-      alert("Please complete seat selection");
+      alert("Please complete seat selection including coach");
     }
 
     if (isValid) {
@@ -297,8 +315,7 @@ const BookingForm = () => {
                 className="border p-2 w-full"
               >
                 <option value="">Select Coach</option>
-                <option value="C01">C01</option>
-                <option value="C02">C02</option>
+                {getCoachOptions()}
               </select>
             </div>
 
@@ -494,6 +511,8 @@ const BookingForm = () => {
         onClose={() => setIsSeatModalOpen(false)}
         onSeatsSelected={handleSeatsSelected}
         selectedSeats={seatData.seats}
+        className={seatData.class}
+        coachName={seatData.coach}
       />
     </div>
   );

@@ -221,7 +221,7 @@ const CheckoutPage = () => {
               {Object.entries(passengerCounts).map(([type, count]) => (
                 <div key={type} className="flex justify-between mb-2">
                   <span>
-                    {type} x {count} 
+                    {type} x {count}
                   </span>
                   <span>₦{prices[seatData.class][type] * count}</span>
                 </div>
