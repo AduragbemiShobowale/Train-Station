@@ -65,6 +65,11 @@ const Login = () => {
             <img src={trainLogo} alt="NRC Logo" className="h-10" />
           </a>
         </header>
+        <header className="p-5 lg:p-8 lg:absolute left-[50%] hidden lg:block">
+          <a href="/">
+            <img src={trainLogo} alt="NRC Logo" className="h-10" />
+          </a>
+        </header>
 
         <div className="p-8 lg:p-12 bg-white w-[95%] md:w-[80%] mx-auto mt-12 lg:w-full rounded-lg lg:rounded-none">
           <h1 className="text-3xl font-bold mb-4">Welcome Back</h1>
