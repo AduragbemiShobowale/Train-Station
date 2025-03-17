@@ -1,32 +1,62 @@
+// src/contexts/AuthContext.js
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+
+// Set up an Axios interceptor to attach the token on every request
+axios.interceptors.request.use(
+  (config) => {
+    const authCookie = Cookies.get("auth");
+    console.log("authCookie is:", authCookie); // <-- Add this
+
+    if (authCookie) {
+      const authData = JSON.parse(authCookie);
+      console.log("Parsed authData is:", authData); // <-- And this
+
+      if (authData.token) {
+        config.headers.Authorization = `Bearer ${authData.token}`;
+      }
+    }
+
+    console.log("Outgoing request headers:", config.headers);
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 // Create the context
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  // 1️⃣ Read the 'auth' cookie *synchronously* before the first render
+  // 1️⃣ Read the 'auth' cookie synchronously before the first render
   const [auth, setAuth] = useState(() => {
     const data = Cookies.get("auth");
     return data
-      ? JSON.parse(data) // e.g. { success, token, user: {id, firstName, lastName, email}, ... }
+      ? JSON.parse(data) // e.g. { success, token, user: { id, firstName, lastName, email }, ... }
       : { user: null, token: "", success: false, message: "" };
   });
 
-  // 2️⃣ Optionally set a base URL for axios (if you want)
-  //    Adjust to your actual environment or remove if not needed
+  // Log auth state changes for debugging
+  useEffect(() => {
+    console.log("Auth state changed:", auth);
+  }, [auth]);
+
+  // 2️⃣ Optionally set a base URL for axios
   useEffect(() => {
     axios.defaults.baseURL =
       import.meta.env.VITE_REACT_APP_API_URL ||
       "https://train-station-backend.onrender.com";
   }, []);
 
-  // 3️⃣ Attach token to all axios requests when it changes
+  // 3️⃣ Attach token to axios defaults when it changes (for consistency)
   useEffect(() => {
     axios.defaults.headers.common["Authorization"] = auth?.token
       ? `Bearer ${auth.token}`
       : "";
+    console.log(
+      "Axios default header:",
+      axios.defaults.headers.common["Authorization"]
+    );
   }, [auth?.token]);
 
   // 4️⃣ Login function
@@ -40,14 +70,19 @@ export const AuthProvider = ({ children }) => {
         const newAuth = {
           success: data.success,
           token: data.token,
-          user: data.user, // e.g. {id, firstName, lastName, email}
+          user: data.user, // e.g. { id, firstName, lastName, email }
         };
 
         // Update state
         setAuth(newAuth);
 
         // Save to cookie (7 days)
-        Cookies.set("auth", JSON.stringify(newAuth), { expires: 7 });
+        Cookies.set("auth", JSON.stringify(newAuth), {
+          expires: 7,
+          path: "/",
+          sameSite: "lax",
+          secure: false, // Set to true if using HTTPS
+        });
         return newAuth;
       } else {
         // If the server responded with success: false
