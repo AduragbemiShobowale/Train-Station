@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import FindMyTrain from "./FindMyTrain";
 import TrainBooking from "./TrainBooking";
-import NotFound from "../faq/NotFound";
+import NoTrainFound from "../../components/NoTrainFound";
 
 const SearchTrain = () => {
   const location = useLocation();
@@ -45,19 +45,19 @@ const SearchTrain = () => {
           setSearchResults(null); // Clear previous search results if an error occurs
         }}
       />
-      
+
       {/* Loading state */}
       {isLoading && <div className="loading">Searching for trains...</div>}
-      
+
       {/* Results or error */}
       {!isLoading && (
         <>
           {error ? (
-            <NotFound message={error} />
+            <NoTrainFound message={error} />
           ) : searchResults !== null && searchResults.length > 0 ? (
             <TrainBooking trains={searchResults} />
           ) : (
-            <NotFound />
+            <NoTrainFound />
           )}
         </>
       )}
