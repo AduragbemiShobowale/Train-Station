@@ -1,80 +1,56 @@
 import React, { useState, useEffect } from "react";
 import "./SeatSelectorModal.css";
+import { SEAT_CONFIG } from "../seatConfig";
 
 const SeatSelectorModal = ({
   isOpen,
   onClose,
   onSeatsSelected,
   selectedSeats,
+  className,
+  coachName,
 }) => {
   const [currentSelectedSeats, setCurrentSelectedSeats] = useState(
     selectedSeats || []
   );
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Seat layout: each "row" has two sub-arrays (seat pairs), so 4 seats per row
-  const seatLayout = [
-    [
-      [1, 2],
-      [3, 4],
-    ],
-    [
-      [5, 6],
-      [7, 8],
-    ],
-    [
-      [9, 10],
-      [11, 12],
-    ],
-    [
-      [13, 14],
-      [15, 16],
-    ],
-    [
-      [17, 18],
-      [19, 20],
-    ],
-    [
-      [21, 22],
-      [23, 24],
-    ],
-    [
-      [25, 26],
-      [27, 28],
-    ],
-    [
-      [29, 30],
-      [31, 32],
-    ],
-    [
-      [33, 34],
-      [35, 36],
-    ],
-    [
-      [37, 38],
-      [39, 40],
-    ],
-    [
-      [41, 42],
-      [43, 44],
-    ],
-    [
-      [45, 46],
-      [47, 48],
-    ],
-  ];
+  // Get seat configuration based on class and coach
+  const getClassConfig = () => SEAT_CONFIG[className] || {};
+  const getSeatsPerCoach = () => getClassConfig().seatsPerCoach || 48;
+
+  // Generate seat layout dynamically
+  const generateSeatLayout = (seatsPerCoach) => {
+    const rows = [];
+    for (let i = 0; i < seatsPerCoach; i += 4) {
+      rows.push([
+        [i + 1, i + 2],
+        [i + 3, i + 4],
+      ]);
+    }
+    return rows;
+  };
+
+  const seatLayout = generateSeatLayout(getSeatsPerCoach());
 
   useEffect(() => {
     setCurrentSelectedSeats(selectedSeats || []);
   }, [selectedSeats]);
 
   const handleSeatClick = (seatNumber) => {
-    // Limit 4 seats total
+    // Get maximum allowed seats per class
+    const maxSeats =
+      {
+        "Standard Class": 4,
+        "Business Class": 3,
+        "First Class": 2,
+      }[className] || 4;
+
     if (
-      currentSelectedSeats.length >= 4 &&
+      currentSelectedSeats.length >= maxSeats &&
       !currentSelectedSeats.includes(seatNumber)
     ) {
-      setErrorMessage("You can only select up to 4 seats");
+      setErrorMessage(`You can only select up to ${maxSeats} seats`);
       return;
     }
 
@@ -103,7 +79,9 @@ const SeatSelectorModal = ({
       <div className="modal-content">
         {/* Header */}
         <div className="modal-header">
-          <h2>Please Select Seat(s)</h2>
+          <h2>
+            Please Select Seat(s) for {className} - Coach {coachName}
+          </h2>
           <button className="close-btn" onClick={onClose}>
             ×
           </button>
@@ -143,7 +121,7 @@ const SeatSelectorModal = ({
                       key={seat}
                       className={`seat ${
                         currentSelectedSeats.includes(seat) ? "selected" : ""
-                      }`}
+                      } ${className.toLowerCase().replace(" ", "-")}`}
                       onClick={() => handleSeatClick(seat)}
                     >
                       {seat}
@@ -157,7 +135,10 @@ const SeatSelectorModal = ({
 
         {/* Footer */}
         <div className="modal-footer">
-          <p>Selected seats: {currentSelectedSeats.join(", ") || "None"}</p>
+          <p>
+            Selected seats for Coach {coachName}:{" "}
+            {currentSelectedSeats.join(", ") || "None"}
+          </p>
           <div className="button-group">
             <button
               className="submit-btn"
