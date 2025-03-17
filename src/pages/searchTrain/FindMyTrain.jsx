@@ -168,7 +168,7 @@ const FindMyTrain = ({ initialCriteria, onSearch, onError }) => {
         <label className="text-white font-medium">Date</label>
         <input
           type="date"
-          className="border p-2 rounded w-[100%] bg-[#18A532] text-white mx-auto"
+          className="border p-2 rounded w-76 bg-[#18A532] text-white mx-auto"
           value={date}
           onChange={handleDateChange}
         />
