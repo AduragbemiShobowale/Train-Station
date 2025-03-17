@@ -14,6 +14,8 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import SearchTrain from "./pages/searchTrain/SearchTrain";
 import BookingForm from "./pages/BookingForm";
+import OppS from ".//components/NoTrainFound"; 
+import NoTicketFound from "./components/NoTicketFound";
 import { SelectedTrainProvider } from "./contexts/SelectedTrainContext";
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
               <Route path="/faq" element={<FaqPage />} />
               <Route path="/searchTrain" element={<SearchTrain />} />
               <Route path="/booking" element={<BookingForm />} />
+              <Route path="/NoTrainFound" element={<OppS />} />
+              <Route path="/NoTicketFound" element={<NoTicketFound />} />
             </Route>
 
             {/* Routes without Navbar & Footer */}
