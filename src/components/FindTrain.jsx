@@ -31,6 +31,7 @@ const FindTrain = ({ onSearch, onError }) => {
     date: "",
   });
   const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Filter out the chosen origin from the destination list
   const filteredDestinations = stations.filter((station) => station !== origin);
@@ -73,6 +74,9 @@ const FindTrain = ({ onSearch, onError }) => {
       return;
     }
 
+    // Set loading state
+    setIsLoading(true);
+
     try {
       console.log(
         "handleFindTrain called — about to POST /api/v1/trains/search"
@@ -85,7 +89,7 @@ const FindTrain = ({ onSearch, onError }) => {
 
       // Pass the fetched trains to the parent via onSearch, if provided
       onSearch?.(response.data);
-      onError?.(""); // Clear any previous error
+      // onError?.(""); // Clear any previous error
 
       // Navigate to /searchTrain and pass the results and search criteria in state
       navigate("/searchTrain", {
@@ -164,8 +168,9 @@ const FindTrain = ({ onSearch, onError }) => {
       <button
         className="bg-green-600 text-white px-6 py-2 rounded w-full md:w-[30%] md:mt-5 hover:cursor-pointer"
         onClick={handleFindTrain}
+        disabled={isLoading}
       >
-        {loading ? "Loading..." : "Find My Train"}
+        {isLoading ? "Searching..." : "Find My Train"}
       </button>
     </div>
   );

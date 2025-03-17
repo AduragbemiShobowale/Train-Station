@@ -3,7 +3,7 @@ import Opps from "../assets/image/Train17363.png";
 
 const OppS = () => {
   return (
-    <section className="flex items-center justify-center text-center p-2">
+    <section className="flex items-center justify-center text-center p-2 py-9">
       <div className="flex flex-col items-center">
         <img src={Opps} alt="No trains found" className="w-48 md:w-56" />
         <h2 className="font-bold text-2xl px-6">

@@ -3,13 +3,14 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import FindMyTrain from "./FindMyTrain";
 import TrainBooking from "./TrainBooking";
-import NotFound from "../faq/NotFound";
+import NoTrainFound from "../../components/NoTrainFound";
 
 const SearchTrain = () => {
   const location = useLocation();
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState(null); // Use null to indicate no results yet
   const [error, setError] = useState("");
   const [initialCriteria, setInitialCriteria] = useState(null);
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
 
   // If the user navigated from the homepage, read the passed state
   useEffect(() => {
@@ -25,15 +26,41 @@ const SearchTrain = () => {
 
   return (
     <div>
-      {/* The search form on this page is pre-populated if criteria exist */}
+      {/* Pre-populated search form */}
       <FindMyTrain
         initialCriteria={initialCriteria}
-        onSearch={setSearchResults}
-        onError={setError}
+        onSearch={(results) => {
+          console.log("Search Results:", results); // Debugging
+          if (results && results.length > 0) {
+            setSearchResults(results);
+            setError(""); // Reset error
+          } else {
+            setSearchResults(null); // Set to null for no results
+            setError("No trains found"); // Set error if empty results
+          }
+        }}
+        onError={(errMsg) => {
+          console.error("Search Error:", errMsg);
+          setError(errMsg);
+          setSearchResults(null); // Clear previous search results if an error occurs
+        }}
       />
-      {/* Display the train booking results */}
-      <TrainBooking trains={searchResults} />
-      {error && <NotFound />}
+
+      {/* Loading state */}
+      {isLoading && <div className="loading">Searching for trains...</div>}
+
+      {/* Results or error */}
+      {!isLoading && (
+        <>
+          {error ? (
+            <NoTrainFound message={error} />
+          ) : searchResults !== null && searchResults.length > 0 ? (
+            <TrainBooking trains={searchResults} />
+          ) : (
+            <NoTrainFound />
+          )}
+        </>
+      )}
     </div>
   );
 };

@@ -1,3 +1,4 @@
+// src/components/FindMyTrain.jsx
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
@@ -18,6 +19,7 @@ const stations = [
 const FindMyTrain = ({ initialCriteria, onSearch, onError }) => {
   const { auth } = useAuth();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   // Initialize form fields with initialCriteria if provided
   const [origin, setOrigin] = useState(initialCriteria?.origin || "");
@@ -80,6 +82,9 @@ const FindMyTrain = ({ initialCriteria, onSearch, onError }) => {
       return;
     }
 
+    // Set loading state
+    setIsLoading(true);
+
     // Make the API call to your backend
     try {
       console.log(
@@ -91,13 +96,15 @@ const FindMyTrain = ({ initialCriteria, onSearch, onError }) => {
         date,
       });
       onSearch(response.data); // Update the parent state with fetched trains
-      onError(""); // Clear any previous error
+      // onError(""); // Clear any previous error
     } catch (error) {
       console.error("Error searching trains:", error);
       onError(
         error.response?.data?.message ||
           "Something went wrong while searching for trains."
       );
+    } finally {
+      setIsLoading(false); // Clear loading state regardless of success/failure
     }
   };
 
@@ -172,8 +179,9 @@ const FindMyTrain = ({ initialCriteria, onSearch, onError }) => {
       <button
         className="bg-white text-[#18A532] hover:text-white hover:bg-[#18A532] font-semibold px-6 py-2 rounded w-full md:w-[30%] lg:w-[20%] md:mt-5"
         onClick={handleFindTrain}
+        disabled={isLoading}
       >
-        Find My Train
+        {isLoading ? "Searching..." : "Find My Train"}
       </button>
     </div>
   );

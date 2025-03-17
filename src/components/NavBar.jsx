@@ -59,7 +59,7 @@ export default function NavBar() {
   // Function to close dropdown after selection
   const closeDropdown = () => {
     setIsDropdownOpen(false);
-    setIsMobileDropdownOpen(false);
+    setIsMobileDropdownOpen(false); // Ensure mobile dropdown closes
   };
 
   // Function to handle password change modal
@@ -111,6 +111,7 @@ export default function NavBar() {
                           key={item.name}
                           href={item.href}
                           className="rounded-md px-3 md:px-2 py-2 text-sm font-medium text-[#01320A]"
+                          onClick={closeDropdown}
                         >
                           {item.name}
                         </a>
@@ -124,12 +125,14 @@ export default function NavBar() {
                         <a
                           href="/signup"
                           className="px-4 py-2 text-sm font-medium text-green-600 border border-green-600 rounded-md hover:bg-green-100"
+                          onClick={closeDropdown}
                         >
                           Register
                         </a>
                         <a
                           href="/signin"
                           className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700"
+                          onClick={closeDropdown}
                         >
                           Sign In
                         </a>
@@ -170,7 +173,6 @@ export default function NavBar() {
                                 My Tickets
                               </a>
                               <a
-                              
                                 className="text-[#01320A] block px-4 py-2 text-sm hover:bg-gray-100"
                                 onClick={handleResetPassword}
                               >
@@ -211,12 +213,14 @@ export default function NavBar() {
                       <a
                         href="/signup"
                         className="block w-full text-center rounded-md border border-green-600 px-3 py-2 text-base font-medium text-green-600 hover:bg-green-100"
+                        onClick={closeDropdown}
                       >
                         Register
                       </a>
                       <a
                         href="/signin"
                         className="block w-full text-center rounded-md bg-green-600 px-3 py-2 text-base font-medium text-white hover:bg-green-700"
+                        onClick={closeDropdown}
                       >
                         Sign In
                       </a>
@@ -257,9 +261,9 @@ export default function NavBar() {
                             My Tickets
                           </a>
                           <a
-                           
                             className="block px-4 py-2 text-sm text-[#01320A] hover:bg-gray-100"
                             onClick={handleResetPassword}
+                            
                           >
                             Reset Password
                           </a>
@@ -291,7 +295,10 @@ export default function NavBar() {
       />
 
       {/* Password Change Modal */}
-      <PassChange isOpen={isPassChangeModalOpen} onClose={() => setIsPassChangeModalOpen(false)} />
+      <PassChange
+        isOpen={isPassChangeModalOpen}
+        onClose={() => setIsPassChangeModalOpen(false)}
+      />
     </>
   );
 }
