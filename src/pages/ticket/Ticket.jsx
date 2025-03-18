@@ -1,25 +1,66 @@
-import React from "react";
+// src/pages/Ticket.jsx (or TicketList.jsx)
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 import RailwayCompanion from "../../components/RailwayCompanion";
 import "./Ticket.css";
+
+// Icons & images
 import businessClassImg from "../../assets/icon/businessClass.png";
 import durationIcon from "../../assets/icon/Frame 1000003455.png";
 import qrCode from "../../assets/icon/bi_qr-code.png";
 import leftImg from "../../assets/icon/left.png";
 import rightImg from "../../assets/icon/right.png";
-import ticketData from "./ticketData";
+import NoTicketFound from "../../components/NoTicketFound"; // custom "no tickets" component
 
 const Ticket = () => {
+  const [tickets, setTickets] = useState([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchAllTickets();
+  }, []);
+
+  const fetchAllTickets = async () => {
+    try {
+      setLoading(true);
+      // If your route is protected with cookies, do { withCredentials: true }
+      const response = await axios.get("/api/v1/ticket", {
+        withCredentials: true,
+      });
+
+      // The server should return an array directly
+      if (Array.isArray(response.data)) {
+        setTickets(response.data);
+      } else {
+        setTickets([]);
+        setError("Unexpected response format from server");
+      }
+    } catch (err) {
+      console.error("Error fetching tickets:", err);
+      setError("Could not fetch tickets. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <div className="ticketLoading">Loading tickets...</div>;
+  }
+
+
   return (
     <div>
       <div className="relative w-full h-22 bg-[#006B14]">
         <h2 className="ticketHeader">My Tickets</h2>
       </div>
 
-      {ticketData.length === 0 ? (
-        <p className="noTicketMessage">No tickets available</p>
+      {tickets.length === 0 ? (
+        <NoTicketFound />
       ) : (
-        ticketData.map((ticket) => (
-          <div key={ticket._id} className="genTicketInfo">
+        tickets.map((booking) => (
+          <div key={booking._id} className="genTicketInfo">
             <div className="topTicketInfo">
               <div className="trainInfo">
                 <div className="train-information">
@@ -29,48 +70,47 @@ const Ticket = () => {
                     className="classImg"
                   />
                   <div>
-                    <h5>{ticket.train.route}</h5>
+                    <h5>{booking.train?.route}</h5>
                     <p>
-                      Train No - {ticket.train.trainNumber} | PNR No:{" "}
-                      {ticket.PNRNo}
+                      Train No - {booking.train?.trainNumber} | Booking ID:{" "}
+                      {booking.bookingId}
                     </p>
                   </div>
                 </div>
-                <p className="activeText">{ticket.status}</p>
+                <p className="activeText">{booking.status}</p>
               </div>
 
               <div className="stationInfo">
                 <div className="leftInfo">
-                  <h5>{ticket.train.departure.time}</h5>
+                  <h5>{booking.train?.departure?.time}</h5>
                   <div className="stationLocation">
-                    <p>{ticket.train.departure.station}</p>
-                    <p>{ticket.train.departure.location}</p>
+                    <p>{booking.train?.departure?.station}</p>
+                    <p>{booking.train?.departure?.street}</p>
                   </div>
-                  <p>Departure Date: {ticket.train.departure.date}</p>
+                  <p>Departure Date: {booking.train?.departure?.date}</p>
                 </div>
                 <div className="middleInfo">
                   <div className="duration">
                     <div className="newbie">
                       <img src={leftImg} alt="" className="leftImg" />
-                      <h6>0 hrs 24 mins</h6>
+                      <h6>{booking.train?.duration}</h6>
                       <img src={rightImg} alt="" className="rightImg" />
                     </div>
-
                     <img
                       src={durationIcon}
                       alt="Duration"
                       className="durationIcon"
                     />
                   </div>
-                  <p className="classText1">{ticket.classType}</p>
+                  <p className="classText1">{booking.classType}</p>
                 </div>
                 <div className="rightInfo">
-                  <h5>{ticket.train.arrival.time}</h5>
+                  <h5>{booking.train?.arrival?.time}</h5>
                   <div className="stationLocation">
-                    <p>{ticket.train.arrival.station}</p>
-                    <p>{ticket.train.arrival.location}</p>
+                    <p>{booking.train?.arrival?.station}</p>
+                    <p>{booking.train?.arrival?.street}</p>
                   </div>
-                  <p>Arrival Date: {ticket.train.arrival.date}</p>
+                  <p>Arrival Date: {booking.train?.arrival?.date}</p>
                 </div>
               </div>
 
@@ -78,7 +118,7 @@ const Ticket = () => {
 
               <div className="bottomTicketInfo">
                 <div>
-                  {ticket.passengers.map((passenger, index) => (
+                  {booking.passengers?.map((passenger, index) => (
                     <div key={index}>
                       <h5>Passenger: {passenger.name}</h5>
                       <p>
@@ -88,14 +128,24 @@ const Ticket = () => {
                     </div>
                   ))}
                   <p>
-                    Coach/Seat No: {ticket.coach}/{ticket.seats} |{" "}
-                    <span>Price: ₦{ticket.totalPrice}</span>
+                    Coach/Seat No: {booking.coach}/
+                    {Array.isArray(booking.seats)
+                      ? booking.seats.join(", ")
+                      : booking.seats}{" "}
+                    | <span>Price: ₦{booking.totalPrice}</span>
                   </p>
                 </div>
                 <div>
                   <img src={qrCode} alt="QR Code" className="qrCode" />
                 </div>
               </div>
+            </div>
+
+            <div className="viewSingleTicket">
+              {/* If you have a single-ticket detail page: */}
+              <Link to={`/ticket/${booking.bookingId}`}>
+                View Ticket Details
+              </Link>
             </div>
           </div>
         ))

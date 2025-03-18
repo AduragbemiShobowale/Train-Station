@@ -166,7 +166,7 @@ export default function NavBar() {
                           <div className="absolute right-0 w-48 mt-2 bg-white shadow-lg rounded-md">
                             <div className="py-1">
                               <a
-                                href="/tickets"
+                                href="/ticket"
                                 className="text-[#01320A] block px-4 py-2 text-sm hover:bg-gray-100"
                                 onClick={closeDropdown}
                               >
@@ -254,7 +254,7 @@ export default function NavBar() {
                       {isMobileDropdownOpen && (
                         <div className="mt-2 space-y-2">
                           <a
-                            href="/tickets"
+                            href="/ticket"
                             className="block px-4 py-2 text-sm text-[#01320A] hover:bg-gray-100"
                             onClick={closeDropdown}
                           >
