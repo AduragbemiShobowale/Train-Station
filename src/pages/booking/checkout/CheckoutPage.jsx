@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Lefticon from "../../../assets/icon/left.png";
 import Righticon from "../../../assets/icon/right.png";
+import axios from "axios";
 
 const CheckoutPage = () => {
   const location = useLocation();
   const [bookingData, setBookingData] = useState(null);
+  const [paymentError, setPaymentError] = useState(null);
 
   useEffect(() => {
     const storedData = localStorage.getItem("bookingData");
@@ -53,18 +55,61 @@ const CheckoutPage = () => {
     return counts;
   }, {});
 
+  const handlePayment = async () => {
+    try {
+      const bookingResponse = await axios.post("/api/v1/bookings", {
+        trainId: selectedTrain._id,
+        classType: seatData.class,
+        coach: seatData.coach,
+        seats: seatData.seats,
+        passengers: passengers.map((p) => ({
+          type: p.passengerType,
+          name: p.passengerName,
+          nin: p.ninNumber,
+          email: p.email,
+          phone: p.phone,
+        })),
+        contact: {
+          email: contact.email,
+          phone: contact.phone,
+        },
+      });
+
+      if (!bookingResponse.data || !bookingResponse.data.booking) {
+        throw new Error("Failed to create booking");
+      }
+
+      const bookingId = bookingResponse.data.booking._id;
+
+      const paymentResponse = await axios.post("/api/v1/payments/initialize", {
+        bookingId,
+      });
+
+      if (
+        paymentResponse.data.status &&
+        paymentResponse.data.data.authorization_url
+      ) {
+        window.location.href = paymentResponse.data.data.authorization_url;
+      } else {
+        throw new Error("Payment initialization failed");
+      }
+    } catch (error) {
+      console.error("Payment Error:", error);
+      setPaymentError(
+        error.response?.data?.message || "Payment initialization failed"
+      );
+    }
+  };
+
   return (
     <div className="max-w-6xl mx-auto p-4 mb-14">
-      {/* Train Information Header */}
       <h2 className="text-center font-bold px-2 text-xl mt-4 bg-[#E2F5E5] py-5 lg:text-[29.11px] rounded-t-2xl">
         {selectedTrain.route} | {selectedTrain.timeOfDay} | Train No -{" "}
         {selectedTrain.trainNumber}
       </h2>
 
       <div className="shadow-2xl p-4 rounded-xl">
-        {/* Departure and Arrival Details */}
         <div className="flex flex-col md:flex-row justify-between items-center px-4 rounded-md">
-          {/* Departure Info */}
           <div className="md:text-left mb-4 md:mb-0 text-center">
             <p className="font-bold text-lg">{selectedTrain.departure.time}</p>
             <p className="font-semibold">{selectedTrain.departure.station}</p>
@@ -76,7 +121,6 @@ const CheckoutPage = () => {
             </p>
           </div>
 
-          {/* Duration & Class Badge */}
           <div className="text-center mb-4 md:mb-0 flex items-center gap-9 px-4 justify-center">
             <img
               className="w-[68px] md:w-[90px]"
@@ -104,7 +148,6 @@ const CheckoutPage = () => {
             />
           </div>
 
-          {/* Arrival Info */}
           <div className="md:text-right text-center">
             <p className="font-bold text-lg">{selectedTrain.arrival.time}</p>
             <p className="font-semibold">{selectedTrain.arrival.station}</p>
@@ -119,16 +162,13 @@ const CheckoutPage = () => {
         <hr className="my-4" />
 
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Left Column - Passenger and Contact Details */}
           <div className="flex flex-col flex-1">
-            {/* Passenger Details */}
             <h2 className="text-xl font-bold mt-6 mb-4">Passenger Details</h2>
             {passengers.map((passenger, index) => (
               <div
                 key={passenger.id}
                 className="bg-white shadow mb-4 rounded-md"
               >
-                {/* Header with labels */}
                 <div className="grid grid-cols-3 gap-4 bg-[#F5F5F5] p-4">
                   <div>
                     <label className="block font-medium">Name</label>
@@ -140,12 +180,11 @@ const CheckoutPage = () => {
                     <label className="block font-medium">Coach/Seat No</label>
                   </div>
                 </div>
-
-                {/* Content */}
-                <div className="grid grid-cols-3 gap-4 p-4 ">
+                <div className="grid grid-cols-3 gap-4 p-4">
                   <div>
                     <p className="mb-1">{passenger.passengerName}</p>
                     <p className="mb-1">{passenger.email}</p>
+                    <p className="mb-1">{passenger.phone}</p>
                   </div>
                   <div>
                     <p>{passenger.passengerType}</p>
@@ -160,9 +199,7 @@ const CheckoutPage = () => {
               </div>
             ))}
 
-            {/* Contact Details */}
             <div className="bg-white shadow mb-6 rounded-md">
-              {/* Header with labels */}
               <div className="grid grid-cols-2 gap-4 bg-[#F5F5F5] p-4">
                 <div>
                   <label className="block font-medium">Email Address</label>
@@ -171,8 +208,6 @@ const CheckoutPage = () => {
                   <label className="block font-medium">Phone Number</label>
                 </div>
               </div>
-
-              {/* Content */}
               <div className="grid grid-cols-2 gap-4 p-4 border-t">
                 <div>
                   <p>{contact.email}</p>
@@ -183,7 +218,6 @@ const CheckoutPage = () => {
               </div>
             </div>
 
-            {/* Terms Checkbox */}
             <div className="flex items-center mb-6">
               <input type="checkbox" className="mr-2" checked readOnly />
               <span className="text-sm">
@@ -193,9 +227,7 @@ const CheckoutPage = () => {
             </div>
           </div>
 
-          {/* Right Column - Apply Voucher and Price Summary */}
           <div className="flex-1 max-w-[350px]">
-            {/* Apply Voucher */}
             <div className="bg-white shadow p-4 mb-6 rounded-md">
               <h3 className="font-semibold mb-2">Apply Voucher</h3>
               <div className="flex">
@@ -214,10 +246,8 @@ const CheckoutPage = () => {
               </div>
             </div>
 
-            {/* Price Summary */}
             <div className="bg-white shadow p-4 mb-6 rounded-md">
               <h3 className="font-semibold mb-2">Price Summary</h3>
-
               {Object.entries(passengerCounts).map(([type, count]) => (
                 <div key={type} className="flex justify-between mb-2">
                   <span>
@@ -226,14 +256,11 @@ const CheckoutPage = () => {
                   <span>₦{prices[seatData.class][type] * count}</span>
                 </div>
               ))}
-
               <div className="flex justify-between mb-2">
                 <span>Convenience Fee</span>
                 <span>₦{convenienceFee}</span>
               </div>
-
               <hr className="my-2" />
-
               <div className="flex justify-between font-bold">
                 <span>Total Fare</span>
                 <span>
@@ -252,11 +279,10 @@ const CheckoutPage = () => {
           </div>
         </div>
 
-        {/* Payment and Cancel Buttons */}
         <div className="flex gap-6 items-center mt-6">
           <button
             className="bg-[#18A532] text-white px-6 py-2 rounded-md w-full lg:w-[20%]"
-            onClick={() => alert("Payment processing logic here")}
+            onClick={handlePayment}
           >
             Make Payment
           </button>
@@ -267,6 +293,10 @@ const CheckoutPage = () => {
             Cancel
           </button>
         </div>
+
+        {paymentError && (
+          <div className="bg-red-100 text-red-700 p-4 mt-4">{paymentError}</div>
+        )}
       </div>
     </div>
   );

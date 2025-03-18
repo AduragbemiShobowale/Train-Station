@@ -17,7 +17,7 @@ import BookingForm from "./pages/booking/BookingForm";
 import { SelectedTrainProvider } from "./contexts/SelectedTrainContext";
 import PageError from "./pages/PageError";
 import CheckoutPage from "./pages/booking/checkout/CheckoutPage";
-
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 function App() {
   return (
@@ -35,6 +35,7 @@ function App() {
               <Route path="/searchTrain" element={<SearchTrain />} />
               <Route path="/booking" element={<BookingForm />} />
               <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/payment-success" element={<PaymentSuccess />} />
             </Route>
 
             {/* Routes without Navbar & Footer */}
