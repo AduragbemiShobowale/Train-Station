@@ -1,3 +1,4 @@
+// CheckoutPage.js
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Lefticon from "../../../assets/icon/left.png";
@@ -8,6 +9,7 @@ const CheckoutPage = () => {
   const location = useLocation();
   const [bookingData, setBookingData] = useState(null);
   const [paymentError, setPaymentError] = useState(null);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   useEffect(() => {
     const storedData = localStorage.getItem("bookingData");
@@ -22,6 +24,29 @@ const CheckoutPage = () => {
       setBookingData(JSON.parse(storedData));
     }
   }, [location.state]);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const bookingId = urlParams.get("bookingId");
+
+    if (bookingId) {
+      checkPaymentStatus(bookingId);
+    }
+  }, []);
+
+  const checkPaymentStatus = async (bookingId) => {
+    try {
+      const response = await axios.get(`/api/v1/bookings/${bookingId}`);
+      if (response.data.booking.status === "confirmed") {
+        setPaymentSuccess(true);
+      } else {
+        setPaymentError("Payment verification failed");
+      }
+    } catch (error) {
+      console.error("Payment verification failed:", error);
+      setPaymentError("Payment verification failed");
+    }
+  };
 
   if (!bookingData) {
     return <div>No booking data available</div>;
@@ -280,12 +305,19 @@ const CheckoutPage = () => {
         </div>
 
         <div className="flex gap-6 items-center mt-6">
-          <button
-            className="bg-[#18A532] text-white px-6 py-2 rounded-md w-full lg:w-[20%]"
-            onClick={handlePayment}
-          >
-            Make Payment
-          </button>
+          {!paymentSuccess && (
+            <button
+              className="bg-[#18A532] text-white px-6 py-2 rounded-md w-full lg:w-[20%]"
+              onClick={handlePayment}
+            >
+              Make Payment
+            </button>
+          )}
+          {paymentSuccess && (
+            <div className="bg-green-100 text-green-700 p-4">
+              Payment successful! Your booking has been confirmed.
+            </div>
+          )}
           <button
             className="border border-[#18A532] text-[#18A532] px-6 py-2 rounded-md w-full lg:w-[20%]"
             onClick={() => window.history.back()}
