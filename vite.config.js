@@ -9,5 +9,13 @@ export default defineConfig({
     hmr: {
       overlay: false,
     },
+    proxy: {
+      "/api/formspree": {
+        target: "https://formspree.io",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/formspree/, ""),
+        secure: false,
+      },
+    },
   },
 });

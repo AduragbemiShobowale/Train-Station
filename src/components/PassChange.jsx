@@ -1,9 +1,9 @@
-// PassChange.jsx
+// src/components/PassChange.jsx
 import React, { useState } from "react";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import { IoClose } from "react-icons/io5";
-import { useAuth } from "../contexts/AuthContext"; // Import AuthContext
 import axios from "axios";
+import SuccessModal from "./SuccessModal";
 
 const PassChange = ({ isOpen, onClose }) => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
@@ -12,8 +12,11 @@ const PassChange = ({ isOpen, onClose }) => {
   const [newPassword, setNewPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { auth } = useAuth();
 
+  // Controls whether the success modal is displayed
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  // If parent says it's not open, don't render anything
   if (!isOpen) return null;
 
   const handleSubmit = async (e) => {
@@ -22,16 +25,24 @@ const PassChange = ({ isOpen, onClose }) => {
     setError("");
 
     try {
+      // Update password request
       const response = await axios.put("/api/v1/auth/update-password", {
         currentPassword,
         newPassword,
       });
 
+      // If success
       if (response.data.success) {
-        // Password updated successfully
         setCurrentPassword("");
         setNewPassword("");
-        onClose();
+
+        // Show the success modal
+        setShowSuccessModal(true);
+
+        // Optionally auto-close the entire PassChange after a delay:
+        // setTimeout(() => {
+        //   onClose(); // This unmounts PassChange
+        // }, 2000);
       }
     } catch (err) {
       setError(
@@ -41,6 +52,13 @@ const PassChange = ({ isOpen, onClose }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Called when user closes success modal
+  const handleSuccessModalClose = () => {
+    setShowSuccessModal(false);
+    // If you want to close PassChange too, do:
+    onClose();
   };
 
   return (
@@ -62,6 +80,7 @@ const PassChange = ({ isOpen, onClose }) => {
           Enter new password details below.
         </p>
 
+        {/* Error Message */}
         {error && <div className="text-red-500 text-sm mb-3">{error}</div>}
 
         {/* Form Fields */}
@@ -142,6 +161,13 @@ const PassChange = ({ isOpen, onClose }) => {
           </button>
         </form>
       </div>
+
+      {/* Success Modal */}
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={handleSuccessModalClose}
+        message="Password updated successfully! You will be logged out on other devices."
+      />
     </div>
   );
 };

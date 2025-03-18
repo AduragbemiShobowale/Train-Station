@@ -1,10 +1,71 @@
-import React from "react";
+import React, { useState } from "react";
 import forgotPasswordImage from "../../../assets/image/signUp.png"; // Replace with your actual image path
 import trainLogo from "../../../assets/icon/TrainLogo.png";
-import { LuEyeOff } from "react-icons/lu";
+import axios from "axios";
 import "./ForgetPassword.css";
 
 const ForgetPassword = () => {
+  const [formData, setFormData] = useState({ email: "" });
+  const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Email validation
+    if (!formData.email) {
+      newErrors.email = "Please enter your email";
+    } else if (
+      !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(formData.email)
+    ) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrors({});
+    setSuccessMessage("");
+    setIsLoading(true);
+
+    if (!validateForm()) {
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "https://train-station-backend.onrender.com/api/v1/auth/forgot-password",
+        { email: formData.email }
+      );
+
+      if (response.status === 200) {
+        setSuccessMessage(
+          "Password reset link has been sent to your email address."
+        );
+      }
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.errors) {
+        setErrors(error.response.data.errors);
+      } else {
+        setErrors((prev) => ({
+          ...prev,
+          general: "Failed to send password reset link. Please try again.",
+        }));
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col lg:flex-row-reverse relative forgot-password register">
       {/* Image Background for Desktop */}
@@ -37,8 +98,18 @@ const ForgetPassword = () => {
             Enter your email address to reset your password.
           </p>
 
+          {/* Display general success message */}
+          {successMessage && (
+            <p className="text-green-500 text-sm mb-4">{successMessage}</p>
+          )}
+
+          {/* Display general error message */}
+          {errors.general && (
+            <p className="text-red-500 text-sm mb-4">{errors.general}</p>
+          )}
+
           {/* Form Fields */}
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email */}
             <div>
               <label
@@ -50,24 +121,36 @@ const ForgetPassword = () => {
               <input
                 type="email"
                 id="email"
-                className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className={`w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 ${
+                  errors.email ? "border-red-500" : ""
+                }`}
                 placeholder="Enter your email address"
-                required
               />
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+              )}
             </div>
 
             {/* Reset Button */}
             <button
               type="submit"
-              className="w-full bg-green-500 text-white py-3 rounded-md font-medium hover:bg-green-600 transition duration-200"
+              disabled={isLoading}
+              className={`w-full bg-green-500 text-white py-3 rounded-md font-medium transition duration-200 ${
+                isLoading
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-green-600"
+              }`}
             >
-              Reset
+              {isLoading ? "Sending..." : "Reset"}
             </button>
           </form>
 
-          {/* Sign Up Link */}
+          {/* Sign In Link */}
           <div className="text-center mt-4">
-            <span className="text-gray-600">Don't have an account? </span>
+            <span className="text-gray-600">Remember your password? </span>
             <a href="/signin" className="text-green-500 hover:underline">
               Sign In
             </a>
