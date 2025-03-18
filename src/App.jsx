@@ -16,7 +16,8 @@ import SearchTrain from "./pages/searchTrain/SearchTrain";
 import BookingForm from "./pages/BookingForm";
 import { SelectedTrainProvider } from "./contexts/SelectedTrainContext";
 import PageError from "./pages/PageError";
-
+import PassModal from "./components/PassModal";
+import SuccessModal from "./components/SuccessModal";
 function App() {
   return (
     <>
@@ -33,6 +34,8 @@ function App() {
               <Route path="/searchTrain" element={<SearchTrain />} />
               <Route path="/booking" element={<BookingForm />} />
               <Route path="/error" element={<PageError />} />
+              <Route path="/pass" element={<PassModal />} />
+              <Route path="/success" element={<SuccessModal />} />
             </Route>
 
             {/* Routes without Navbar & Footer */}
