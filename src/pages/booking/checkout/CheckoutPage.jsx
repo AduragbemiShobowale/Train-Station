@@ -27,8 +27,8 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const bookingId = urlParams.get("bookingId");
-
+    const bookingId = urlParams.get('bookingId');
+    
     if (bookingId) {
       checkPaymentStatus(bookingId);
     }
