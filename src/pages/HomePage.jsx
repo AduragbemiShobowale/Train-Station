@@ -16,7 +16,7 @@ function HomePage() {
             <h1 className="lg:text-[56px] text-[28px] text-white font-bold leading-tight max-w-[800px]">
               Journey Through Nigeria's Heart by Rail
             </h1>
-            <p className="text-white text-[14px] lg:text-[18px] max-w-[600px] px-6 md:px-0">
+            <p className="text-white text-[14px] lg:text-[18px] max-w-[600px] px-6 md:px-0 lan">
               Safe, comfortable, and reliable train services across the nation.
               Experience the future of Nigerian transportation, today.
             </p>

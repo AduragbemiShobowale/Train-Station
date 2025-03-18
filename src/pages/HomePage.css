@@ -9,6 +9,10 @@
   background-attachment: fixed;
 }
 
+.lan{
+  color: white;
+}
+
 @media (min-width: 700px) {
   .mainCont {
     min-height: 28rem;
