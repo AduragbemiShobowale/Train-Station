@@ -2,7 +2,7 @@ const trainSchedules = [
   {
     trainNumber: "LL1",
     route: "Lagos - Ibadan",
-    timeOfDay: "Morning Train", // Added property
+    timeOfDay: "Morning Train",
     departure: {
       station: "Mobolaji Johnson Station",
       street: "Ebute Metta",
