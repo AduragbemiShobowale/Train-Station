@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelectedTrain } from "../../contexts/SelectedTrainContext";
-import FindMyTrain from "../searchTrain/FindMyTrain";
 import SeatSelectorModal from "./seatSelector/SeatSelectorModal";
+import FindMyTrain from "../searchTrain/FindMyTrain";
 import Lefticon from "../../assets/icon/left.png";
 import Righticon from "../../assets/icon/right.png";
 import { SEAT_CONFIG } from "./seatConfig";
@@ -145,12 +145,14 @@ const BookingForm = () => {
     if (!contact.email || !contact.phone) {
       isValid = false;
       alert("Please complete contact details");
+      return;
     }
 
     // Validate seat selection
     if (!seatData.class || !seatData.coach || !seatData.seats.length) {
       isValid = false;
       alert("Please complete seat selection including coach");
+      return;
     }
 
     if (isValid) {
@@ -229,7 +231,7 @@ const BookingForm = () => {
         {selectedTrain.trainNumber}
       </h2>
       <div className="shadow-2xl p-4 rounded-xl">
-        <div className="flex flex-col md:flex-row justify-between items-center px-4 rounded-md">
+        <div className="flex flex-col md:flex-row justify-between items-center px-4 rounded-t-md">
           {/* Departure Info */}
           <div className="md:text-left mb-4 md:mb-0 text-center">
             <p className="font-bold text-lg">{selectedTrain.departure.time}</p>
@@ -239,11 +241,12 @@ const BookingForm = () => {
             </p>
             <p className="text-sm text-gray-600">
               {selectedTrain.departure.date}
+              
             </p>
           </div>
 
           {/* Duration & Class Badge */}
-          <div className="text-center mb-4 md:mb-0 flex items-center gap-9 px-4 justify-center">
+          <div className="text-center mb-4 md:mb-0 flex items-center gap-9 justify-center">
             <img
               className="w-[68px] md:w-[90px]"
               src={Lefticon}
@@ -258,7 +261,7 @@ const BookingForm = () => {
                     ? "text-[#F4AC00] bg-[#FFF7E3]"
                     : selectedClass.toLowerCase() === "first class"
                     ? "text-[#18A532] bg-[#E8FFED]"
-                    : "text-[#595959] bg-[#EDEDED]"
+                    : "text-[#595959] bg-[#EDEDE]"
                 }`}
               >
                 {selectedClass}
@@ -460,7 +463,7 @@ const BookingForm = () => {
           <hr />
 
           {/* Contact Details */}
-          <div className=" py-4 mb-6 rounded-md">
+          <div className="py-4 mb-6 rounded-md">
             <h3 className="font-semibold mb-2">Contact Details</h3>
             <div className="flex gap-6">
               <div>
@@ -474,7 +477,7 @@ const BookingForm = () => {
                 />
               </div>
               <div>
-                <label className="block mb-1 font-medium  ">Phone Number</label>
+                <label className="block mb-1 font-medium ">Phone Number</label>
                 <input
                   type="tel"
                   placeholder="Enter contact phone"
