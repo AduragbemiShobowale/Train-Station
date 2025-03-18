@@ -1,17 +1,14 @@
-// components/TrainBooking.js
-import React from "react";
-import trainSchedules from "./trainSchedule";
+// TrainBooking.js
+import React, { useEffect } from "react";
 import FirstClassIcon from "../../assets/icon/firstClass.png";
 import BusinessClassIcon from "../../assets/icon/businessClass.png";
 import StandardClassIcon from "../../assets/icon/standardClass.png";
 import Lefticon from "../../assets/icon/left.png";
 import Righticon from "../../assets/icon/right.png";
-
-// 1) Import the context and the router hook
 import { useSelectedTrain } from "../../contexts/SelectedTrainContext";
 import { useNavigate } from "react-router-dom";
 
-// 2) A helper function to get the icon for each class
+// Helper to get the icon for a ticket class
 const getClassIcon = (type) => {
   const icons = {
     "first class": FirstClassIcon,
@@ -21,40 +18,50 @@ const getClassIcon = (type) => {
   return icons[type.toLowerCase()] || null;
 };
 
-const TrainBooking = () => {
-  // 3) Destructure the set functions from our context
+const TrainBooking = ({ trains }) => {
   const { setSelectedTrain, setSelectedClass } = useSelectedTrain();
-
-  // 4) useNavigate for routing
   const navigate = useNavigate();
 
-  // 5) When user clicks Book Now, store data in context & navigate
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleBookNow = (train, ticketClass) => {
-    setSelectedTrain(train); // Entire train object
-    setSelectedClass(ticketClass.type); // E.g. “Business Class”
-    navigate("/booking"); // Go to booking form page
+    setSelectedTrain(train);
+    setSelectedClass(ticketClass.type);
+    navigate("/booking");
   };
+
+  if (!trains || trains.length === 0) {
+    return (
+      <div className="max-w-6xl mx-auto mt-10 text-center">
+        <p>No trains found. Please use the form above to search.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto rounded-lg">
-      {trainSchedules.map((train, index) => (
+      {trains.map((train, index) => (
         <div key={index} className="mb-10 mx-7 rounded-lg shadow-lg">
-          {/* Title */}
+          {/* Train Header */}
           <h3 className="text-center font-bold text-[16px] lg:text-[29.11px] py-6 bg-green-100 rounded-t-lg">
             {train.route} | {train.timeOfDay} | Train No - {train.trainNumber}
           </h3>
 
-          {/* Main Body */}
+          {/* Train Details */}
           <div className="p-12">
             <div className="flex flex-col md:flex-row text-center gap-7 justify-between items-center p-6 bg-white rounded-t-md">
-              {/* Departure */}
+              {/* Departure Info */}
               <div className="md:text-left text-center">
                 <p className="font-bold text-lg">{train.departure.time}</p>
                 <p className="font-semibold">{train.departure.station}</p>
                 <p className="text-sm text-gray-600">
                   {train.departure.street}
                 </p>
-                <p className="text-sm text-gray-600">{train.departure.date}</p>
+                <p className="text-sm text-gray-600">
+                  {new Date(train.departure.date).toDateString()}
+                </p>
               </div>
 
               {/* Duration */}
@@ -74,12 +81,14 @@ const TrainBooking = () => {
                 />
               </div>
 
-              {/* Arrival */}
+              {/* Arrival Info */}
               <div className="md:text-right text-center">
                 <p className="font-bold text-lg">{train.arrival.time}</p>
                 <p className="font-semibold">{train.arrival.station}</p>
                 <p className="text-sm text-gray-600">{train.arrival.street}</p>
-                <p className="text-sm text-gray-600">{train.arrival.date}</p>
+                <p className="text-sm text-gray-600">
+                  {new Date(train.arrival.date).toDateString()}
+                </p>
               </div>
             </div>
             <hr />
@@ -108,10 +117,8 @@ const TrainBooking = () => {
                     </span>
                   </p>
                   <p className="text-gray-600">
-                    Reserved: {ticketClass.reserved}
+                    Reserved Seats: {ticketClass.availableSeats}
                   </p>
-
-                  {/* 6) Clicking this calls handleBookNow */}
                   <button
                     className="mt-4 hover:cursor-pointer text-green-400 border border-green-400 hover:bg-green-700 hover:text-white w-full py-2 px-6 rounded-lg transition duration-300"
                     onClick={() => handleBookNow(train, ticketClass)}

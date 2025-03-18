@@ -1,5 +1,5 @@
 .mainCont {
-  background-image: url("../assets/image/homepage.png");
+  background-image: url("https://res.cloudinary.com/dgde8cwjk/image/upload/v1742037548/TrainStation%20Pictures/homepage_bwncwc.png");
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
@@ -9,9 +9,10 @@
   background-attachment: fixed;
 }
 
+
 @media (min-width: 700px) {
   .mainCont {
-    min-height: 28rem; 
+    min-height: 28rem;
     height: auto;
   }
 }

@@ -1,0 +1,161 @@
+/* components/SeatSelectorModal.css */
+
+/* Dimmed overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal container */
+.modal-content {
+  background-color: #f5f5f5;
+  padding: 15px 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  margin: 20px auto;
+
+  /* Limit vertical space, scroll inside if needed */
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Error Message */
+.error-message {
+  background-color: #ffdddd;
+  color: #ff0000;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+}
+
+/* Legend */
+.legend {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.legend-seat {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.available {
+  background-color: #ccc;
+}
+
+.selected {
+  background-color: #008000;
+}
+
+.unavailable {
+  background-color: #ff6b6b;
+}
+
+/* Single-column seat grid */
+.seat-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.seat-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* or center, if you prefer */
+  gap: 20px; /* space between seat pairs */
+}
+
+.seat-pair {
+  display: flex;
+  gap: 20px;
+}
+
+/* Individual seat */
+.seat {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.seat.selected {
+  background-color: #008000;
+  color: white;
+}
+
+/* Footer */
+.modal-footer {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-group {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* Buttons */
+.cancel-btn,
+.submit-btn {
+  padding: 12px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+}
+
+.submit-btn {
+  background-color: #008000;
+  color: white;
+}
+
+.submit-btn:disabled {
+  background-color: #666;
+  cursor: not-allowed;
+}
