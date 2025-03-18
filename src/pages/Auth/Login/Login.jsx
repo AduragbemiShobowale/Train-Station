@@ -12,7 +12,7 @@ const Login = () => {
 
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false); // for loading state
 
   const handleChange = (e) => {
@@ -23,10 +23,38 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Email validation
+    if (!formData.email) {
+      newErrors.email = "Please enter your email";
+    } else if (
+      !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(formData.email)
+    ) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    // Password validation
+    if (!formData.password) {
+      newErrors.password = "Please enter your password";
+    } else if (formData.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setErrors({});
     setIsLoading(true);
+
+    if (!validateForm()) {
+      setIsLoading(false);
+      return;
+    }
 
     try {
       // Call the login function from AuthContext
@@ -37,11 +65,17 @@ const Login = () => {
         navigate("/");
       } else {
         // If the server returned success: false
-        setError(data.message || "Login failed");
+        setErrors((prev) => ({
+          ...prev,
+          general: data.message || "Login failed",
+        }));
       }
     } catch (err) {
       // If an error is thrown from the context (e.g., network error)
-      setError(err.message);
+      setErrors((prev) => ({
+        ...prev,
+        general: err.message,
+      }));
     } finally {
       setIsLoading(false);
     }
@@ -75,8 +109,10 @@ const Login = () => {
           <h1 className="text-3xl font-bold mb-4">Welcome Back</h1>
           <p className="text-gray-600 mb-4">Sign in to continue</p>
 
-          {/* Display any error message */}
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {/* Display any general error message */}
+          {errors.general && (
+            <p className="text-red-500 text-sm mb-4">{errors.general}</p>
+          )}
 
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -89,13 +125,17 @@ const Login = () => {
               </label>
               <input
                 type="email"
-                name="email" // important to match handleChange
+                name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                className={`w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 ${
+                  errors.email ? "border-red-500" : ""
+                }`}
                 placeholder="Enter your email address"
-                required
               />
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+              )}
             </div>
 
             <div>
@@ -111,9 +151,10 @@ const Login = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 pr-10"
+                  className={`w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 pr-10 ${
+                    errors.password ? "border-red-500" : ""
+                  }`}
                   placeholder="Enter your password"
-                  required
                 />
                 <button
                   type="button"
@@ -127,6 +168,9 @@ const Login = () => {
                   )}
                 </button>
               </div>
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+              )}
             </div>
 
             <div className="text-right">

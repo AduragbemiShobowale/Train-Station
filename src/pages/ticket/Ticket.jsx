@@ -1,11 +1,11 @@
-// src/pages/Ticket.jsx (or TicketList.jsx)
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import RailwayCompanion from "../../components/RailwayCompanion";
 
 // Icons & images
-import businessClassImg from "../../assets/icon/businessClass.png";
+import FirstClassIcon from "../../assets/icon/firstClass.png";
+import BusinessClassIcon from "../../assets/icon/businessClass.png";
+import StandardClassIcon from "../../assets/icon/standardClass.png";
 import durationIcon from "../../assets/icon/Frame 1000003455.png";
 import qrCode from "../../assets/icon/bi_qr-code.png";
 import leftImg from "../../assets/icon/left.png";
@@ -33,7 +33,6 @@ const Ticket = () => {
       if (Array.isArray(response.data)) {
         setTickets(response.data);
       } else {
-        // If the server returns something else, treat that as an error
         setTickets([]);
         setError("Unexpected response format from server");
       }
@@ -45,10 +44,26 @@ const Ticket = () => {
     }
   };
 
-  console.log(tickets);
+  // Helper to get the icon for a ticket class
+  const getClassIcon = (type) => {
+    const icons = {
+      "first class": FirstClassIcon,
+      "business class": BusinessClassIcon,
+      "standard class": StandardClassIcon,
+    };
+    return icons[type.toLowerCase()] || null;
+  };
 
-  // 4) If tickets is null or empty array after loading,
-  //    that means we have no tickets
+  // Helper to get class-specific CSS styles
+  const getClassStyles = (type) => {
+    const styles = {
+      "first class": "text-[#18A532] bg-[#E8FFED] border-[#18A532]",
+      "business class": "text-[#F4AC00] bg-[#FFF7E3] border-[#F4AC00]",
+      "standard class": "text-[#595959] bg-[#EDEDE] border-[#595959]",
+    };
+    return styles[type.toLowerCase()] || "";
+  };
+
   if (!tickets || tickets.length === 0) {
     return (
       <div>
@@ -61,7 +76,6 @@ const Ticket = () => {
     );
   }
 
-  // 5) Otherwise, render the list of tickets
   return (
     <div>
       <div className="relative w-full h-22 bg-[#006B14]">
@@ -73,14 +87,15 @@ const Ticket = () => {
           <div className="topTicketInfo">
             <div className="trainInfo">
               <div className="train-information">
+                {/* Using the getClassIcon function to determine which icon to display */}
                 <img
-                  src={businessClassImg}
+                  src={getClassIcon(booking.classType)}
                   alt="Train Class"
-                  className="classImg"
+                  className="classImg w-[20%] h-[20%]"
                 />
                 <div>
-                  <h5>{booking.train?.route}</h5>
-                  <p>
+                  <h5 className="trainRack">{booking.train?.route}</h5>
+                  <p className="trainRail">
                     Train No - {booking.train?.trainNumber} | Booking ID:{" "}
                     {booking.bookingId}
                   </p>
@@ -91,18 +106,24 @@ const Ticket = () => {
 
             <div className="stationInfo">
               <div className="leftInfo">
-                <h5>{booking.train?.departure?.time}</h5>
+                <h5 className="trainRack">{booking.train?.departure?.time}</h5>
                 <div className="stationLocation">
-                  <p>{booking.train?.departure?.station}</p>
-                  <p>{booking.train?.departure?.street}</p>
+                  <p className="trainRail">
+                    {booking.train?.departure?.station}
+                  </p>
+                  <p className="trainRail">
+                    {booking.train?.departure?.street}
+                  </p>
                 </div>
-                <p>Departure Date: {booking.train?.departure?.date}</p>
+                <p className="trainRail">
+                  Departure Date: {booking.train?.departure?.date}
+                </p>
               </div>
               <div className="middleInfo">
                 <div className="duration">
                   <div className="newbie">
                     <img src={leftImg} alt="" className="leftImg" />
-                    <h6>{booking.train?.duration}</h6>
+                    <h6 className="trainRoad">{booking.train?.duration}</h6>
                     <img src={rightImg} alt="" className="rightImg" />
                   </div>
                   <img
@@ -111,15 +132,23 @@ const Ticket = () => {
                     className="durationIcon"
                   />
                 </div>
-                <p className="classText1">{booking.classType}</p>
+                <p
+                  className={`classText1 font-bold text-[10px] py-3 rounded-4xl lg:text-[16.53px] ${getClassStyles(
+                    booking.classType
+                  )}`}
+                >
+                  {booking.classType}
+                </p>
               </div>
               <div className="rightInfo">
-                <h5>{booking.train?.arrival?.time}</h5>
+                <h5 className="trainRack">{booking.train?.arrival?.time}</h5>
                 <div className="stationLocation">
-                  <p>{booking.train?.arrival?.station}</p>
-                  <p>{booking.train?.arrival?.street}</p>
+                  <p className="trainRail">{booking.train?.arrival?.station}</p>
+                  <p className="trainRail">{booking.train?.arrival?.street}</p>
                 </div>
-                <p>Arrival Date: {booking.train?.arrival?.date}</p>
+                <p className="trainRail">
+                  Arrival Date: {booking.train?.arrival?.date}
+                </p>
               </div>
             </div>
 
@@ -129,19 +158,22 @@ const Ticket = () => {
               <div>
                 {booking.passengers?.map((passenger, index) => (
                   <div key={index}>
-                    <h5>Passenger: {passenger.name}</h5>
-                    <p>
+                    <h5 className="trainRack">Passenger: {passenger.name}</h5>
+                    <p className="trainRail">
                       NIN: ****{passenger.nin.slice(-4)} | Contact No:{" "}
                       {passenger.phone} | Type: {passenger.type}
                     </p>
                   </div>
                 ))}
-                <p>
+                <p className="trainRail">
                   Coach/Seat No: {booking.coach}/
                   {Array.isArray(booking.seats)
                     ? booking.seats.join(", ")
                     : booking.seats}{" "}
-                  | <span>Price: ₦{booking.totalPrice}</span>
+                  |{" "}
+                  <span className="trainBounce">
+                    Price: ₦{booking.totalPrice}
+                  </span>
                 </p>
               </div>
               <div>
