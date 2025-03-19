@@ -26,9 +26,11 @@ const Ticket = () => {
     try {
       setLoading(true);
 
-      const response = await axios.get("/api/v1/ticket", {
+      const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+      const response = await axios.get(`${apiUrl}/api/v1/ticket`, {
         withCredentials: true,
       });
+      console.log(response);
 
       if (Array.isArray(response.data)) {
         setTickets(response.data);
