@@ -14,13 +14,15 @@ import NoTicketFound from "../../components/NoTicketFound";
 import "./Tickets.css";
 
 const Ticket = () => {
-  const [tickets, setTickets] = useState(null);
+  const [tickets, setTickets] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchAllTickets();
   }, []);
+
+  console.log("Tickets state:", tickets);
 
   const fetchAllTickets = async () => {
     try {
@@ -30,7 +32,11 @@ const Ticket = () => {
       const response = await axios.get(`${apiUrl}/api/v1/ticket`, {
         withCredentials: true,
       });
-      console.log(response);
+      console.log("API URL:", import.meta.env.VITE_REACT_APP_API_URL);
+
+
+      console.log("API Response:", response.data);
+      console.log("Raw API Response Data:", response.data);
 
       if (Array.isArray(response.data)) {
         setTickets(response.data);
@@ -67,6 +73,7 @@ const Ticket = () => {
   };
 
   if (!tickets || tickets.length === 0) {
+    console.log("No tickets found, showing NoTicketFound component");
     return (
       <div>
         <div className="relative w-full h-22 bg-[#006B14]">
