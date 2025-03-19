@@ -154,7 +154,7 @@ const CheckoutPage = () => {
               {selectedTrain.departure.street}
             </p>
             <p className="text-sm text-gray-600">
-              {selectedTrain.departure.date}
+              {new Date(selectedTrain.departure.date).toDateString()}
             </p>
           </div>
 
@@ -192,7 +192,7 @@ const CheckoutPage = () => {
               {selectedTrain.arrival.street}
             </p>
             <p className="text-sm text-gray-600">
-              {selectedTrain.arrival.date}
+              {new Date(selectedTrain.arrival.date).toDateString()}
             </p>
           </div>
         </div>
