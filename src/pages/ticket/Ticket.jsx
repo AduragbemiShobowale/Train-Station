@@ -73,7 +73,7 @@ const Ticket = () => {
     const styles = {
       "first class": "text-[#18A532] bg-[#E8FFED] border-[#18A532]",
       "business class": "text-[#F4AC00] bg-[#FFF7E3] border-[#F4AC00]",
-      "standard class": "text-[#595959] bg-[#EDEDE] border-[#595959]",
+      "standard class": "text-[#595959] bg-[#EDEDED] border-[#595959]",
     };
     return styles[type.toLowerCase()] || "";
   };

@@ -160,7 +160,9 @@ const BookingForm = () => {
         passengerErrors[index] = "NIN number must be 11 characters long";
       } else if (!/^\d+$/.test(passenger.ninNumber)) {
         passengerErrors[index] = "NIN number must contain only digits";
-      } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(passenger.email)) {
+      } else if (
+        !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(passenger.email)
+      ) {
         passengerErrors[index] = "Please enter a valid email address";
       } else if (!/^\d{10,15}$/.test(passenger.phone)) {
         passengerErrors[index] = "Please enter a valid phone number";
@@ -286,7 +288,7 @@ const BookingForm = () => {
               {selectedTrain.departure.street}
             </p>
             <p className="text-sm text-gray-600">
-              {selectedTrain.departure.date}
+              {new Date(selectedTrain.departure.date).toDateString()}
             </p>
           </div>
 
@@ -306,7 +308,7 @@ const BookingForm = () => {
                     ? "text-[#F4AC00] bg-[#FFF7E3]"
                     : selectedClass.toLowerCase() === "first class"
                     ? "text-[#18A532] bg-[#E8FFED]"
-                    : "text-[#595959] bg-[#EDEDE]"
+                    : "text-[#595959] bg-[#EDEDED]"
                 }`}
               >
                 {selectedClass}
@@ -327,7 +329,7 @@ const BookingForm = () => {
               {selectedTrain.arrival.street}
             </p>
             <p className="text-sm text-gray-600">
-              {selectedTrain.arrival.date}
+              {new Date(selectedTrain.arrival.date).toDateString()}
             </p>
           </div>
         </div>
@@ -494,35 +496,35 @@ const BookingForm = () => {
                     placeholder="Enter NIN number"
                     value={passenger.ninNumber}
                     onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, '');
+                      const value = e.target.value.replace(/\D/g, "");
                       handlePassengerChange(passenger.id, "ninNumber", value);
-                      
+
                       // Clear previous timeout
                       if (ninValidationTimeout) {
                         clearTimeout(ninValidationTimeout);
                       }
-                      
+
                       // Set new timeout for validation
                       const timeout = setTimeout(() => {
                         if (value.length !== 11) {
-                          setErrors(prev => ({
+                          setErrors((prev) => ({
                             ...prev,
                             passengers: {
                               ...prev.passengers,
-                              [idx]: "NIN number must be 11 characters long"
-                            }
+                              [idx]: "NIN number must be 11 characters long",
+                            },
                           }));
                         } else {
-                          setErrors(prev => ({
+                          setErrors((prev) => ({
                             ...prev,
                             passengers: {
                               ...prev.passengers,
-                              [idx]: ""
-                            }
+                              [idx]: "",
+                            },
                           }));
                         }
                       }, 500);
-                      
+
                       setNinValidationTimeout(timeout);
                     }}
                     className={`border p-2 w-full ${
@@ -579,7 +581,7 @@ const BookingForm = () => {
                     placeholder="Enter phone number"
                     value={passenger.phone}
                     onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, '');
+                      const value = e.target.value.replace(/\D/g, "");
                       handlePassengerChange(passenger.id, "phone", value);
                     }}
                     className={`border p-2 w-full ${
@@ -629,7 +631,7 @@ const BookingForm = () => {
                   placeholder="Enter contact phone"
                   value={contact.phone}
                   onChange={(e) => {
-                    const value = e.target.value.replace(/\D/g, '');
+                    const value = e.target.value.replace(/\D/g, "");
                     handleContactChange("phone", value);
                   }}
                   className={`border p-2 w-full ${
@@ -650,14 +652,14 @@ const BookingForm = () => {
           <div className="flex gap-6 py-6">
             <button
               type="submit"
-              className="bg-[#18A532] text-white px-6 py-2 rounded-md w-full lg:w-[20%]"
+              className="bg-[#18A532] text-white px-6 py-2 rounded-md w-full lg:w-[20%] cursor-pointer"
             >
               Proceed
             </button>
             <button
               type="button"
               onClick={() => navigate("/searchTrain")}
-              className="border border-[#18A532] text-[#18A532] px-6 py-2 rounded-md w-full lg:w-[20%]"
+              className="border border-[#18A532] text-[#18A532] px-6 py-2 rounded-md w-full lg:w-[20%] cursor-pointer"
             >
               Cancel
             </button>
