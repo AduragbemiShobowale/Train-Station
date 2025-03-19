@@ -1,5 +1,5 @@
 // PaymentConfirmationModal.js
-import React from "react";
+import React, { useState } from "react";
 
 const PaymentConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
   const [isProcessing, setIsProcessing] = useState(false);
