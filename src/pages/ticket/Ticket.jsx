@@ -130,7 +130,10 @@ const Ticket = () => {
                   </p>
                 </div>
                 <p className="trainRail">
-                  Departure Date: {booking.train?.departure?.date}
+                  Departure Date:{" "}
+                  {booking.train?.departure?.date
+                    ? new Date(booking.train?.departure?.date).toDateString()
+                    : "Date not available"}
                 </p>
               </div>
               <div className="middleInfo">
@@ -161,7 +164,10 @@ const Ticket = () => {
                   <p className="trainRail">{booking.train?.arrival?.street}</p>
                 </div>
                 <p className="trainRail">
-                  Arrival Date: {booking.train?.arrival?.date}
+                  Arrival Date:{" "}
+                  {booking.train?.arrival?.date
+                    ? new Date(booking.train?.arrival?.date).toDateString()
+                    : "Date not available"}
                 </p>
               </div>
             </div>

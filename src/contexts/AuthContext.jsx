@@ -1,4 +1,3 @@
-// src/contexts/AuthContext.js
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -116,8 +115,23 @@ export const AuthProvider = ({ children }) => {
     setAuth({ user: null, token: "", success: false, message: "" });
   };
 
+  // 7️⃣ Reset Password function
+  const resetPassword = async (resetToken, password) => {
+    try {
+      const response = await axios.put(
+        `/api/v1/auth/reset-password/${resetToken}`,
+        { password }
+      );
+      return response.data;
+    } catch (error) {
+      throw error.response.data.message;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ auth, login, signup, logout }}>
+    <AuthContext.Provider
+      value={{ auth, login, signup, logout, resetPassword }}
+    >
       {children}
     </AuthContext.Provider>
   );
