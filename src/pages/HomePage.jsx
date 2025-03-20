@@ -28,6 +28,7 @@ function HomePage() {
         <TrainInfo />
         <NewsUpdates />
         <RailwayCompanion />
+        
       </div>
     </div>
   );

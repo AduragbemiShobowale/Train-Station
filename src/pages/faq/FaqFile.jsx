@@ -76,17 +76,17 @@ const FaqFile = ({ searchQuery }) => {
   );
 
   return (
-    <div className="faq-container">
-      <div className="faq-box">
+    <div className="faq-containers">
+      <div className="faq-boxs">
         {filteredFaqs.length > 0 ? (
           filteredFaqs.map((faq, index) => (
-            <div key={index} className="faq-item">
-              <button className="faq-question" onClick={() => toggleFAQ(index)}>
+            <div key={index} className="faq-items">
+              <button className="faq-questions" onClick={() => toggleFAQ(index)}>
                 <h2>{faq.question}</h2>
                 {openIndex === index ? <FaMinus /> : <FaPlus />}
               </button>
               {openIndex === index && (
-                <div className="faq-answer">
+                <div className="faq-answers">
                   {Array.isArray(faq.answer) ? (
                     <ul>
                       {faq.answer.map((step, i) => (
@@ -106,7 +106,7 @@ const FaqFile = ({ searchQuery }) => {
           <NotFound />
         )}
       </div>
-      <p className="faq-footer">
+      <p className="faq-footers">
         Can't find the answer you are looking for?{" "}
         <a href="/contactus">
           <span className="faq-link">Send us a message</span>

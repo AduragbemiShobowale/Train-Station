@@ -12,7 +12,7 @@ const ContactUsPage = () => {
         <div className="contact-text">
           <h1>Contact Us</h1>
         </div>
-        <p className="content md:w-[45%]">
+        <p className="content md:w-[45%] ">
           Safe, comfortable, and reliable train services across the nation.
           Experience the future of Nigerian transportation, today.
         </p>
