@@ -18,6 +18,9 @@ import { SelectedTrainProvider } from "./contexts/SelectedTrainContext";
 import Ticket from "./pages/ticket/Ticket";
 import CheckoutPage from "./pages/booking/checkout/CheckoutPage"
 import PageError from "./pages/PageError";
+import PageError from "./pages/PageError";
+import CheckoutPage from "./pages/booking/checkout/CheckoutPage";
+import ResetPassword from "./pages/Auth/Reset Password/ResetPassword";
 function App() {
   return (
     <>
@@ -36,6 +39,8 @@ function App() {
               <Route path="/ticket" element={<Ticket />} />
               <Route path="/checkout" element={<CheckoutPage />} />
               {/* <Route path="/payment-success" element={<PaymentSuccess />} /> */}
+              <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/ticket" element={<Ticket />} />
             </Route>
 
             {/* Routes without Navbar & Footer */}
@@ -43,6 +48,7 @@ function App() {
               <Route path="/signup" element={<Register />} />
               <Route path="/signin" element={<Login />} />
               <Route path="/forgot-password" element={<ForgetPassword />} />
+              <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
             </Route>
 
             {/* Error Page for undefined routes */}

@@ -4,12 +4,14 @@ import { useLocation } from "react-router-dom";
 import Lefticon from "../../../assets/icon/left.png";
 import Righticon from "../../../assets/icon/right.png";
 import axios from "axios";
+import PaymentConfirmationModal from "./PaymentConfirmationModal";
 
 const CheckoutPage = () => {
   const location = useLocation();
   const [bookingData, setBookingData] = useState(null);
   const [paymentError, setPaymentError] = useState(null);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   useEffect(() => {
     const storedData = localStorage.getItem("bookingData");
@@ -27,8 +29,8 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const bookingId = urlParams.get('bookingId');
-    
+    const bookingId = urlParams.get("bookingId");
+
     if (bookingId) {
       checkPaymentStatus(bookingId);
     }
@@ -80,7 +82,11 @@ const CheckoutPage = () => {
     return counts;
   }, {});
 
-  const handlePayment = async () => {
+  const handlePayment = () => {
+    setIsPaymentModalOpen(true);
+  };
+
+  const confirmPayment = async () => {
     try {
       const bookingResponse = await axios.post("/api/v1/bookings", {
         trainId: selectedTrain._id,
@@ -123,7 +129,13 @@ const CheckoutPage = () => {
       setPaymentError(
         error.response?.data?.message || "Payment initialization failed"
       );
+    } finally {
+      setIsPaymentModalOpen(false);
     }
+  };
+
+  const closePaymentModal = () => {
+    setIsPaymentModalOpen(false);
   };
 
   return (
@@ -142,7 +154,7 @@ const CheckoutPage = () => {
               {selectedTrain.departure.street}
             </p>
             <p className="text-sm text-gray-600">
-              {selectedTrain.departure.date}
+              {new Date(selectedTrain.departure.date).toDateString()}
             </p>
           </div>
 
@@ -180,7 +192,7 @@ const CheckoutPage = () => {
               {selectedTrain.arrival.street}
             </p>
             <p className="text-sm text-gray-600">
-              {selectedTrain.arrival.date}
+              {new Date(selectedTrain.arrival.date).toDateString()}
             </p>
           </div>
         </div>
@@ -330,6 +342,13 @@ const CheckoutPage = () => {
           <div className="bg-red-100 text-red-700 p-4 mt-4">{paymentError}</div>
         )}
       </div>
+
+      {/* Payment Confirmation Modal */}
+      <PaymentConfirmationModal
+        isOpen={isPaymentModalOpen}
+        onClose={closePaymentModal}
+        onConfirm={confirmPayment}
+      />
     </div>
   );
 };

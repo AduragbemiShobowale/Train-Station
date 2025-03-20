@@ -26,6 +26,21 @@ const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // State for password requirements
+  const [passwordRequirements, setPasswordRequirements] = useState({
+    minLength: false,
+    hasLower: false,
+    hasUpper: false,
+    hasNumber: false,
+    hasSpecial: false,
+  });
+
+  // State to track if password field has been interacted with
+  const [isPasswordTouched, setIsPasswordTouched] = useState(false);
+
+  // State to track if all requirements are met
+  const [areAllRequirementsMet, setAreAllRequirementsMet] = useState(false);
+
   // Toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -42,6 +57,28 @@ const Register = () => {
       ...formValues,
       [name]: value,
     });
+
+    // Check password requirements when password field changes
+    if (name === "password") {
+      checkPasswordRequirements(value);
+      setIsPasswordTouched(true);
+    }
+  };
+
+  // Check password against requirements
+  const checkPasswordRequirements = (password) => {
+    const requirements = {
+      minLength: password.length >= 8,
+      hasLower: /[a-z]/.test(password),
+      hasUpper: /[A-Z]/.test(password),
+      hasNumber: /\d/.test(password),
+      hasSpecial: /[@$!%*?&]/.test(password),
+    };
+
+    const allMet = Object.values(requirements).every((req) => req);
+    setAreAllRequirementsMet(allMet);
+
+    setPasswordRequirements(requirements);
   };
 
   // Validate form before submission
@@ -59,7 +96,7 @@ const Register = () => {
       "idNumber",
       "email",
       "password",
-      "confirmPassword", // Ensure confirmPassword is also required
+      "confirmPassword",
     ].forEach((field) => {
       if (!formValues[field]) {
         newErrors[field] = `Please enter your ${field}`;
@@ -80,8 +117,14 @@ const Register = () => {
     }
 
     // ID number format validation
-    if (formValues.idNumber && !/^\d{11}$/.test(formValues.idNumber)) {
-      newErrors.idNumber = "ID number must be 11 digits";
+    if (formValues.idNumber) {
+      if (!/^\d+$/.test(formValues.idNumber)) {
+        newErrors.idNumber = "ID number must contain only digits";
+      } else if (formValues.idNumber.length !== 11) {
+        newErrors.idNumber = "ID number must be exactly 11 digits";
+      }
+    } else {
+      newErrors.idNumber = "Please enter your ID number";
     }
 
     // Password strength validation
@@ -92,7 +135,7 @@ const Register = () => {
       )
     ) {
       newErrors.password =
-        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character";
+        "Password must be 8 character long and contain at least one uppercase letter, one lowercase letter, one number, and one special character";
     }
 
     // Confirm password validation
@@ -377,6 +420,11 @@ const Register = () => {
                   name="idNumber"
                   value={formValues.idNumber}
                   onChange={handleChange}
+                  onKeyPress={(e) => {
+                    if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete') {
+                      e.preventDefault();
+                    }
+                  }}
                   className={`w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 ${
                     errors.idNumber ? "border-red-500" : ""
                   }`}
@@ -445,6 +493,62 @@ const Register = () => {
                 </div>
                 {errors.password && (
                   <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+                )}
+
+                {/* Password requirements */}
+                {isPasswordTouched && !areAllRequirementsMet && (
+                  <div className="mt-2 space-y-1">
+                    <div className="flex items-center">
+                      <span
+                        className={`w-4 h-4 rounded-full mr-2 ${
+                          passwordRequirements.minLength
+                            ? "bg-green-500"
+                            : "bg-gray-400"
+                        }`}
+                      />
+                      <span className="text-xs">Minimum 8 characters</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span
+                        className={`w-4 h-4 rounded-full mr-2 ${
+                          passwordRequirements.hasLower
+                            ? "bg-green-500"
+                            : "bg-gray-400"
+                        }`}
+                      />
+                      <span className="text-xs">One lower case</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span
+                        className={`w-4 h-4 rounded-full mr-2 ${
+                          passwordRequirements.hasUpper
+                            ? "bg-green-500"
+                            : "bg-gray-400"
+                        }`}
+                      />
+                      <span className="text-xs">One upper case</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span
+                        className={`w-4 h-4 rounded-full mr-2 ${
+                          passwordRequirements.hasNumber
+                            ? "bg-green-500"
+                            : "bg-gray-400"
+                        }`}
+                      />
+                      <span className="text-xs">One number</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span
+                        className={`w-4 h-4 rounded-full mr-2 ${
+                          passwordRequirements.hasSpecial
+                            ? "bg-green-500"
+                            : "bg-gray-400"
+                        }`}
+                      />
+                      <span className="text-xs">One special character</span>
+                    </div>
+                  </div>
                 )}
               </div>
               <div>

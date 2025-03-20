@@ -41,6 +41,16 @@ const BookingForm = () => {
   // Contact details state
   const [contact, setContact] = useState({ email: "", phone: "" });
 
+  // Validation errors state
+  const [errors, setErrors] = useState({
+    seat: "",
+    passengers: {},
+    contact: {},
+  });
+
+  // Add debouncing for NIN validation
+  const [ninValidationTimeout, setNinValidationTimeout] = useState(null);
+
   // Helpers for seat data
   const handleSeatDataChange = (field, value) => {
     setSeatData((prev) => ({
@@ -120,53 +130,82 @@ const BookingForm = () => {
     setContact({ ...contact, [field]: value });
   };
 
+  // Form validation
+  const validateForm = () => {
+    const newErrors = {
+      seat: "",
+      passengers: {},
+      contact: {},
+    };
+
+    // Seat validation
+    if (!seatData.class) {
+      newErrors.seat = "Please select a class";
+    } else if (!seatData.coach) {
+      newErrors.seat = "Please select a coach";
+    } else if (seatData.seats.length === 0) {
+      newErrors.seat = "Please select at least one seat";
+    }
+
+    // Passenger validation
+    const passengerErrors = {};
+    passengers.forEach((passenger, index) => {
+      if (!passenger.passengerType) {
+        passengerErrors[index] = "Please select passenger type";
+      } else if (!passenger.passengerName) {
+        passengerErrors[index] = "Please enter passenger name";
+      } else if (!passenger.ninNumber) {
+        passengerErrors[index] = "Please enter NIN number";
+      } else if (passenger.ninNumber.length !== 11) {
+        passengerErrors[index] = "NIN number must be 11 characters long";
+      } else if (!/^\d+$/.test(passenger.ninNumber)) {
+        passengerErrors[index] = "NIN number must contain only digits";
+      } else if (
+        !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(passenger.email)
+      ) {
+        passengerErrors[index] = "Please enter a valid email address";
+      } else if (!/^\d{10,15}$/.test(passenger.phone)) {
+        passengerErrors[index] = "Please enter a valid phone number";
+      }
+    });
+
+    // Contact validation
+    const contactErrors = {};
+    if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(contact.email)) {
+      contactErrors.email = "Please enter a valid email address";
+    }
+    if (!/^\d{10,15}$/.test(contact.phone)) {
+      contactErrors.phone = "Please enter a valid phone number";
+    }
+
+    newErrors.passengers = passengerErrors;
+    newErrors.contact = contactErrors;
+
+    setErrors(newErrors);
+
+    return (
+      Object.keys(newErrors.seat).length === 0 &&
+      Object.keys(newErrors.passengers).length === 0 &&
+      Object.keys(newErrors.contact).length === 0
+    );
+  };
+
   // Form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Basic validation
-    let isValid = true;
-
-    // Validate passengers
-    passengers.forEach((passenger) => {
-      if (
-        !passenger.passengerType ||
-        !passenger.passengerName ||
-        !passenger.ninNumber ||
-        !passenger.email ||
-        !passenger.phone
-      ) {
-        isValid = false;
-        alert("Please complete all passenger details");
-      }
-    });
-
-    // Validate contact details
-    if (!contact.email || !contact.phone) {
-      isValid = false;
-      alert("Please complete contact details");
+    if (!validateForm()) {
       return;
     }
 
-    // Validate seat selection
-    if (!seatData.class || !seatData.coach || !seatData.seats.length) {
-      isValid = false;
-      alert("Please complete seat selection including coach");
-      return;
-    }
-
-    if (isValid) {
-      const bookingData = {
-        selectedTrain,
-        seatData,
-        passengers,
-        contact,
-      };
-      console.log("Booking Data:", bookingData);
-      // Here you would typically send this data to your backend
-      // For now, we'll just log it and navigate to a confirmation page
-      navigate("/checkout", { state: { bookingData } });
-    }
+    const bookingData = {
+      selectedTrain,
+      seatData,
+      passengers,
+      contact,
+    };
+    console.log("Booking Data:", bookingData);
+    navigate("/checkout", { state: { bookingData } });
   };
 
   // Persist selected train and class on component mount
@@ -212,6 +251,15 @@ const BookingForm = () => {
     setSeatsSelected(selectedSeats.length > 0);
   };
 
+  // NIN validation debouncer
+  useEffect(() => {
+    return () => {
+      if (ninValidationTimeout) {
+        clearTimeout(ninValidationTimeout);
+      }
+    };
+  }, [ninValidationTimeout]);
+
   return (
     <div className="max-w-6xl mx-auto p-4 mb-14">
       {/* Display error message if any */}
@@ -240,8 +288,7 @@ const BookingForm = () => {
               {selectedTrain.departure.street}
             </p>
             <p className="text-sm text-gray-600">
-              {selectedTrain.departure.date}
-              
+              {new Date(selectedTrain.departure.date).toDateString()}
             </p>
           </div>
 
@@ -261,7 +308,7 @@ const BookingForm = () => {
                     ? "text-[#F4AC00] bg-[#FFF7E3]"
                     : selectedClass.toLowerCase() === "first class"
                     ? "text-[#18A532] bg-[#E8FFED]"
-                    : "text-[#595959] bg-[#EDEDE]"
+                    : "text-[#595959] bg-[#EDEDED]"
                 }`}
               >
                 {selectedClass}
@@ -282,7 +329,7 @@ const BookingForm = () => {
               {selectedTrain.arrival.street}
             </p>
             <p className="text-sm text-gray-600">
-              {selectedTrain.arrival.date}
+              {new Date(selectedTrain.arrival.date).toDateString()}
             </p>
           </div>
         </div>
@@ -300,13 +347,18 @@ const BookingForm = () => {
                 disabled
                 value={seatData.class}
                 onChange={(e) => handleSeatDataChange("class", e.target.value)}
-                className="border p-2 w-full"
+                className={`border p-2 w-full ${
+                  errors.seat && !seatData.class ? "border-red-500" : ""
+                }`}
               >
                 <option value="">Select Class</option>
                 <option value="Business Class">Business Class</option>
                 <option value="Standard Class">Standard Class</option>
                 <option value="First Class">First Class</option>
               </select>
+              {errors.seat && !seatData.class && (
+                <p className="text-red-500 text-xs mt-1">{errors.seat}</p>
+              )}
             </div>
 
             {/* Coach */}
@@ -315,11 +367,16 @@ const BookingForm = () => {
               <select
                 value={seatData.coach}
                 onChange={(e) => handleSeatDataChange("coach", e.target.value)}
-                className="border p-2 w-full"
+                className={`border p-2 w-full ${
+                  errors.seat && !seatData.coach ? "border-red-500" : ""
+                }`}
               >
                 <option value="">Select Coach</option>
                 {getCoachOptions()}
               </select>
+              {errors.seat && !seatData.coach && (
+                <p className="text-red-500 text-xs mt-1">{errors.seat}</p>
+              )}
             </div>
 
             {/* Seat */}
@@ -329,12 +386,19 @@ const BookingForm = () => {
                 <button
                   type="button"
                   onClick={() => setIsSeatModalOpen(true)}
-                  className="border p-2 w-full flex justify-between items-center"
+                  className={`border p-2 w-full flex justify-between items-center ${
+                    errors.seat && seatData.seats.length === 0
+                      ? "border-red-500"
+                      : ""
+                  }`}
                 >
                   {seatData.seats?.join(", ") || "Select seat(s)"}
                   <span>▼</span>
                 </button>
               </div>
+              {errors.seat && seatData.seats.length === 0 && (
+                <p className="text-red-500 text-xs mt-1">{errors.seat}</p>
+              )}
             </div>
           </div>
 
@@ -374,12 +438,23 @@ const BookingForm = () => {
                         e.target.value
                       )
                     }
-                    className="border p-2 w-full"
+                    className={`border p-2 w-full ${
+                      errors.passengers[idx] &&
+                      errors.passengers[idx].includes("passenger type")
+                        ? "border-red-500"
+                        : ""
+                    }`}
                   >
                     <option value="">Select passenger type</option>
                     <option value="Adult">Adult</option>
                     <option value="Child">Child</option>
                   </select>
+                  {errors.passengers[idx] &&
+                    errors.passengers[idx].includes("passenger type") && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.passengers[idx]}
+                      </p>
+                    )}
                 </div>
 
                 {/* Passenger Name */}
@@ -398,8 +473,19 @@ const BookingForm = () => {
                         e.target.value
                       )
                     }
-                    className="border p-2 w-full"
+                    className={`border p-2 w-full ${
+                      errors.passengers[idx] &&
+                      errors.passengers[idx].includes("name")
+                        ? "border-red-500"
+                        : ""
+                    }`}
                   />
+                  {errors.passengers[idx] &&
+                    errors.passengers[idx].includes("name") && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.passengers[idx]}
+                      </p>
+                    )}
                 </div>
 
                 {/* NIN Number */}
@@ -409,15 +495,51 @@ const BookingForm = () => {
                     type="text"
                     placeholder="Enter NIN number"
                     value={passenger.ninNumber}
-                    onChange={(e) =>
-                      handlePassengerChange(
-                        passenger.id,
-                        "ninNumber",
-                        e.target.value
-                      )
-                    }
-                    className="border p-2 w-full"
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, "");
+                      handlePassengerChange(passenger.id, "ninNumber", value);
+
+                      // Clear previous timeout
+                      if (ninValidationTimeout) {
+                        clearTimeout(ninValidationTimeout);
+                      }
+
+                      // Set new timeout for validation
+                      const timeout = setTimeout(() => {
+                        if (value.length !== 11) {
+                          setErrors((prev) => ({
+                            ...prev,
+                            passengers: {
+                              ...prev.passengers,
+                              [idx]: "NIN number must be 11 characters long",
+                            },
+                          }));
+                        } else {
+                          setErrors((prev) => ({
+                            ...prev,
+                            passengers: {
+                              ...prev.passengers,
+                              [idx]: "",
+                            },
+                          }));
+                        }
+                      }, 500);
+
+                      setNinValidationTimeout(timeout);
+                    }}
+                    className={`border p-2 w-full ${
+                      errors.passengers[idx] &&
+                      errors.passengers[idx].includes("NIN")
+                        ? "border-red-500"
+                        : ""
+                    }`}
                   />
+                  {errors.passengers[idx] &&
+                    errors.passengers[idx].includes("NIN") && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.passengers[idx]}
+                      </p>
+                    )}
                 </div>
 
                 {/* Email Address */}
@@ -436,8 +558,19 @@ const BookingForm = () => {
                         e.target.value
                       )
                     }
-                    className="border p-2 w-full"
+                    className={`border p-2 w-full ${
+                      errors.passengers[idx] &&
+                      errors.passengers[idx].includes("email")
+                        ? "border-red-500"
+                        : ""
+                    }`}
                   />
+                  {errors.passengers[idx] &&
+                    errors.passengers[idx].includes("email") && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.passengers[idx]}
+                      </p>
+                    )}
                 </div>
 
                 {/* Phone Number */}
@@ -447,15 +580,23 @@ const BookingForm = () => {
                     type="tel"
                     placeholder="Enter phone number"
                     value={passenger.phone}
-                    onChange={(e) =>
-                      handlePassengerChange(
-                        passenger.id,
-                        "phone",
-                        e.target.value
-                      )
-                    }
-                    className="border p-2 w-full"
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, "");
+                      handlePassengerChange(passenger.id, "phone", value);
+                    }}
+                    className={`border p-2 w-full ${
+                      errors.passengers[idx] &&
+                      errors.passengers[idx].includes("phone")
+                        ? "border-red-500"
+                        : ""
+                    }`}
                   />
+                  {errors.passengers[idx] &&
+                    errors.passengers[idx].includes("phone") && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.passengers[idx]}
+                      </p>
+                    )}
                 </div>
               </div>
             </div>
@@ -466,25 +607,42 @@ const BookingForm = () => {
           <div className="py-4 mb-6 rounded-md">
             <h3 className="font-semibold mb-2">Contact Details</h3>
             <div className="flex gap-6">
-              <div>
+              <div className="flex-1">
                 <label className="block mb-1 font-medium">Email Address</label>
                 <input
                   type="email"
                   placeholder="Enter contact email"
                   value={contact.email}
                   onChange={(e) => handleContactChange("email", e.target.value)}
-                  className="border p-2 w-full"
+                  className={`border p-2 w-full ${
+                    errors.contact.email ? "border-red-500" : ""
+                  }`}
                 />
+                {errors.contact.email && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.contact.email}
+                  </p>
+                )}
               </div>
-              <div>
+              <div className="flex-1">
                 <label className="block mb-1 font-medium ">Phone Number</label>
                 <input
                   type="tel"
                   placeholder="Enter contact phone"
                   value={contact.phone}
-                  onChange={(e) => handleContactChange("phone", e.target.value)}
-                  className="border p-2 w-full"
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, "");
+                    handleContactChange("phone", value);
+                  }}
+                  className={`border p-2 w-full ${
+                    errors.contact.phone ? "border-red-500" : ""
+                  }`}
                 />
+                {errors.contact.phone && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.contact.phone}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -494,14 +652,14 @@ const BookingForm = () => {
           <div className="flex gap-6 py-6">
             <button
               type="submit"
-              className="bg-[#18A532] text-white px-6 py-2 rounded-md w-full lg:w-[20%]"
+              className="bg-[#18A532] text-white px-6 py-2 rounded-md w-full lg:w-[20%] cursor-pointer"
             >
               Proceed
             </button>
             <button
               type="button"
               onClick={() => navigate("/searchTrain")}
-              className="border border-[#18A532] text-[#18A532] px-6 py-2 rounded-md w-full lg:w-[20%]"
+              className="border border-[#18A532] text-[#18A532] px-6 py-2 rounded-md w-full lg:w-[20%] cursor-pointer"
             >
               Cancel
             </button>

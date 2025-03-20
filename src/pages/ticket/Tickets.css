@@ -6,20 +6,20 @@
   padding-top: 20px;
 }
 
-h5 {
+.trainRack {
   font-size: 24px;
   font-weight: 600;
 }
 
-h6 {
+.trainRoad {
   font-size: 22px;
   font-weight: 600;
 }
 
-.grey {
+.trainRail {
   color: rgba(109, 109, 109, 1);
 }
-span {
+.trainBounce {
   color: black;
 }
 .genTicketInfo {
@@ -76,6 +76,7 @@ span {
 
 .train-information {
   display: flex;
+  align-items: center;
   gap: 10px;
 }
 
@@ -89,14 +90,11 @@ span {
   border: 1px solid #18a532;
 }
 
-.classText1 {
-  background-color: #f1e8d2;
-  color: #f4ac00;
+/* .classText1 {
   padding: 5px;
-  border: 1px solid #f4ac00;
   border-radius: 30px;
   text-align: center;
-}
+} */
 
 .leftImg,
 .rightImg {
@@ -109,26 +107,26 @@ span {
 }
 
 /* @media (max-width: 768px) {
-  .stationInfo {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-  }
-  .stationLocation {
-    display: flex;
-    gap: 5px;
-  }
-
-  .topTicketInfo{padding: 30px;}
+    .stationInfo {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+    .stationLocation {
+      display: flex;
+      gap: 5px;
+    }
   
-
-  h5{font-size: 10px;
-font-weight: 600;}
-
-.activeText{padding: 5px;}
-
-  p{font-size: 8px;}
-} */
+    .topTicketInfo{padding: 30px;}
+    
+  
+    h5{font-size: 10px;
+  font-weight: 600;}
+  
+  .activeText{padding: 5px;}
+  
+    p{font-size: 8px;}
+  } */
 @media (max-width: 768px) {
   .topTicketInfo {
     padding: 20px;
@@ -150,11 +148,11 @@ font-weight: 600;}
   }
 
   /* .bottomTicketInfo {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 10px;
-    } */
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+      } */
 
   .activeText {
     padding: 5px;
@@ -162,11 +160,11 @@ font-weight: 600;}
     font-size: 12px;
   }
 
-  h5 {
+  .trainRack {
     font-size: 12px;
   }
 
-  h6 {
+  .trainRoad {
     font-size: 14px;
   }
 
@@ -176,7 +174,7 @@ font-weight: 600;}
     align-items: center;
     gap: 3px;
   }
-  p .stationLocation {
+  .trainRail .stationLocation {
     text-align: center;
   }
 
@@ -184,10 +182,10 @@ font-weight: 600;}
     max-width: 100%;
     height: auto;
   }
-  .classImg {
+  /* .classImg {
     max-width: 100%;
     height: 50px;
-  }
+  } */
 
   .qrCode {
     max-width: 60%;
@@ -236,7 +234,7 @@ font-weight: 600;}
     gap: 20px;
   }
 
-  p {
+  .trainRail {
     font-size: 12px;
   }
 }

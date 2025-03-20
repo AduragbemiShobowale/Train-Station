@@ -9,6 +9,7 @@
   background-attachment: fixed;
 }
 
+
 @media (min-width: 700px) {
   .mainCont {
     min-height: 28rem;
