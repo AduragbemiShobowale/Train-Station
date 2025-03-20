@@ -16,6 +16,7 @@ import SearchTrain from "./pages/searchTrain/SearchTrain";
 import BookingForm from "./pages/booking/BookingForm";
 import { SelectedTrainProvider } from "./contexts/SelectedTrainContext";
 import PageError from "./pages/PageError";
+import Mytickets from "./pages/Mytickets";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
               <Route path="/faq" element={<FaqPage />} />
               <Route path="/searchTrain" element={<SearchTrain />} />
               <Route path="/booking" element={<BookingForm />} />
+              <Route path="/mytickets" element={<Mytickets />} />
             </Route>
 
             {/* Routes without Navbar & Footer */}
