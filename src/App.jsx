@@ -18,8 +18,8 @@ import { SelectedTrainProvider } from "./contexts/SelectedTrainContext";
 import Ticket from "./pages/ticket/Ticket";
 import CheckoutPage from "./pages/booking/checkout/CheckoutPage"
 import PageError from "./pages/PageError";
-import PageError from "./pages/PageError";
-import CheckoutPage from "./pages/booking/checkout/CheckoutPage";
+// import PageError from "./pages/PageError";
+// import CheckoutPage from "./pages/booking/checkout/CheckoutPage";
 import ResetPassword from "./pages/Auth/Reset Password/ResetPassword";
 function App() {
   return (
