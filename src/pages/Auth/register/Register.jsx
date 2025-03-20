@@ -96,7 +96,7 @@ const Register = () => {
       "idNumber",
       "email",
       "password",
-      "confirmPassword", // Ensure confirmPassword is also required
+      "confirmPassword",
     ].forEach((field) => {
       if (!formValues[field]) {
         newErrors[field] = `Please enter your ${field}`;
@@ -117,8 +117,14 @@ const Register = () => {
     }
 
     // ID number format validation
-    if (formValues.idNumber && !/^\d{11}$/.test(formValues.idNumber)) {
-      newErrors.idNumber = "ID number must be 11 digits";
+    if (formValues.idNumber) {
+      if (!/^\d+$/.test(formValues.idNumber)) {
+        newErrors.idNumber = "ID number must contain only digits";
+      } else if (formValues.idNumber.length !== 11) {
+        newErrors.idNumber = "ID number must be exactly 11 digits";
+      }
+    } else {
+      newErrors.idNumber = "Please enter your ID number";
     }
 
     // Password strength validation
@@ -414,6 +420,11 @@ const Register = () => {
                   name="idNumber"
                   value={formValues.idNumber}
                   onChange={handleChange}
+                  onKeyPress={(e) => {
+                    if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete') {
+                      e.preventDefault();
+                    }
+                  }}
                   className={`w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 ${
                     errors.idNumber ? "border-red-500" : ""
                   }`}
