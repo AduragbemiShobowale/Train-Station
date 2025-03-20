@@ -22,12 +22,12 @@ const destinations = [
 
 function Destinations() {
   return (
-    <section className="px-4 md:px-12  py-10 bg-gray-200 pt-[15rem] md:pt-30 ">
-      <div className="text-center mb-6">
-        <h2 className="md:text-[52px] text-[26px] font-bold text-gray-900">
+    <section className="px-4 md:px-12   bg-gray-200 pt-[15rem] md:pt-30">
+      <div className="text-center mb-15">
+        <h2 className="md:text-[52px] text-[26px] font-bold text-gray-900 ">
           Explore Popular Destinations
         </h2>
-        <p className="text-gray-600 text-center text-[14px] md:text-[22px] mt-5 justify-center max-w-3xl mx-auto">
+        <p className="text-gray-600 text-center text-[14px] md:text-[22px] mt-1 justify-center max-w-5xl mx-auto">
           Discover the beauty and diversity of Nigeria through our extensive
           rail network. From bustling city centers to cultural landmarks, our
           trains connect you to the nation’s most captivating destinations.
@@ -38,7 +38,7 @@ function Destinations() {
         {destinations.map((destination, index) => (
           <div
             key={index}
-            className="relative text-white rounded-lg shadow-xl overflow-hidden hover:shadow-2xl transition-shadow"
+            className="relative text-white rounded-lg shadow-xl overflow-hidden hover:shadow-2xl transition-shadow mb-18"
           >
             <img
               src={destination.image}

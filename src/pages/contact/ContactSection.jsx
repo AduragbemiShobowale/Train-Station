@@ -45,7 +45,9 @@ const ContactSection = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`Form submission failed with status: ${response.status}`);
+        throw new Error(
+          `Form submission failed with status: ${response.status}`
+        );
       }
 
       // Reset form and errors
@@ -158,9 +160,9 @@ const ContactSection = () => {
         break;
     }
 
-    setErrors(prev => ({
+    setErrors((prev) => ({
       ...prev,
-      [fieldName]: newError
+      [fieldName]: newError,
     }));
   };
 
@@ -168,10 +170,10 @@ const ContactSection = () => {
     <div className="max-w-7xl mx-auto px-6 md:px-12 py-12 flex flex-col md:flex-col lg:flex-row gap-10">
       {/* Contact Info Section */}
       <div className="bg-[#F3FAF6] p-6 md:p-10 rounded-lg flex flex-col w-full md:w-3/4 lg:w-1/2 mx-auto">
-        <h2 className="text-[28px] md:text-[32px] font-semibold text-gray-800 mb-4 text-left md:text-left">
+        <h2 className="text-[28px] md:text-[32px] font-semibold text-gray-800 text-left md:text-left">
           Get In Touch
         </h2>
-        <p className="text-gray-600 mb-6 text-[14px] md:text-[16px] text-left md:text-left">
+        <p className="text-gray-600 mb-6 text-[14px] md:text-[16px] text-left md:text-left md:w-[85%] ">
           Fill up the form and our team will get back to you within 24 hours.
         </p>
 

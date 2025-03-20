@@ -32,11 +32,11 @@ const services = [
 
 const Services = () => {
   return (
-    <section className=" mx-auto pt-12 text-center bg-[#F0F7F6]">
-      <h2 className="md:text-[52px] text-[28px] font-bold text-center mb-5 ">
+    <section className=" mx-auto pt-20 text-center bg-[#F0F7F6]">
+      <h2 className="md:text-[52px] text-[28px] font-bold text-center">
         Discover our Services
       </h2>
-      <p className="text-gray-600 text-center text-[22px] mb-5 mx-auto px-20 pb-6">
+      <p className="text-gray-600 text-center text-[22px] mb-3 mx-auto px-5 pb-5 max-w-3xl ">
         Experience a new standard of rail travel with our comprehesive range of
         services designed for your comfort and convenience.
       </p>
