@@ -108,7 +108,9 @@ const FaqFile = ({ searchQuery }) => {
       </div>
       <p className="faq-footers">
         Can't find the answer you are looking for?{" "}
-        <span className="faq-links">Send us a message</span>
+        <a href="/contactus">
+          <span className="faq-link">Send us a message</span>
+        </a>
       </p>
     </div>
   );
