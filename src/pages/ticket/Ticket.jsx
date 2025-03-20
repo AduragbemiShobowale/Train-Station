@@ -30,7 +30,7 @@ const Ticket = () => {
                   />
                   <div>
                     <h5>{ticket.train.route}</h5>
-                    <p>
+                    <p className="grey">
                       Train No - {ticket.train.trainNumber} | PNR No:{" "}
                       {ticket.PNRNo}
                     </p>
@@ -43,10 +43,10 @@ const Ticket = () => {
                 <div className="leftInfo">
                   <h5>{ticket.train.departure.time}</h5>
                   <div className="stationLocation">
-                    <p>{ticket.train.departure.station}</p>
-                    <p>{ticket.train.departure.location}</p>
+                    <p className="grey">{ticket.train.departure.station}</p>
+                    <p className="grey">{ticket.train.departure.location}</p>
                   </div>
-                  <p>Departure Date: {ticket.train.departure.date}</p>
+                  <p className="grey">Departure Date: {ticket.train.departure.date}</p>
                 </div>
                 <div className="middleInfo">
                   <div className="duration">
@@ -67,10 +67,10 @@ const Ticket = () => {
                 <div className="rightInfo">
                   <h5>{ticket.train.arrival.time}</h5>
                   <div className="stationLocation">
-                    <p>{ticket.train.arrival.station}</p>
-                    <p>{ticket.train.arrival.location}</p>
+                    <p className="grey">{ticket.train.arrival.station}</p>
+                    <p className="grey">{ticket.train.arrival.location}</p>
                   </div>
-                  <p>Arrival Date: {ticket.train.arrival.date}</p>
+                  <p className="grey">Arrival Date: {ticket.train.arrival.date}</p>
                 </div>
               </div>
 
@@ -81,13 +81,13 @@ const Ticket = () => {
                   {ticket.passengers.map((passenger, index) => (
                     <div key={index}>
                       <h5>Passenger: {passenger.name}</h5>
-                      <p>
+                      <p className="grey">
                         NIN: ****{passenger.nin.slice(-4)} | Contact No:{" "}
                         {passenger.phone} | Type: {passenger.type}
                       </p>
                     </div>
                   ))}
-                  <p>
+                  <p className="grey">
                     Coach/Seat No: {ticket.coach}/{ticket.seats} |{" "}
                     <span>Price: ₦{ticket.totalPrice}</span>
                   </p>

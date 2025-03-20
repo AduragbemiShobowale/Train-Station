@@ -16,7 +16,7 @@ h6 {
   font-weight: 600;
 }
 
-p {
+.grey {
   color: rgba(109, 109, 109, 1);
 }
 span {
@@ -178,7 +178,6 @@ font-weight: 600;}
   }
   p .stationLocation {
     text-align: center;
-    
   }
 
   img {
@@ -222,11 +221,12 @@ font-weight: 600;}
     align-items: center;
   }
 
-  .stationInfo{display: flex;
-justify-content: center;
-align-items: center;
-margin: 0 auto;}
-
+  .stationInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
 }
 
 @media (max-width: 1024px) {
