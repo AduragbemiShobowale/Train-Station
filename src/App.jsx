@@ -16,8 +16,10 @@ import SearchTrain from "./pages/searchTrain/SearchTrain";
 import BookingForm from "./pages/booking/BookingForm";
 import { SelectedTrainProvider } from "./contexts/SelectedTrainContext";
 import Ticket from "./pages/ticket/Ticket";
+import CheckoutPage from "./pages/booking/checkout/CheckoutPage"
 import PageError from "./pages/PageError";
-import CheckoutPage from "./pages/booking/checkout/CheckoutPage";
+// import PageError from "./pages/PageError";
+// import CheckoutPage from "./pages/booking/checkout/CheckoutPage";
 import ResetPassword from "./pages/Auth/Reset Password/ResetPassword";
 function App() {
   return (
@@ -34,6 +36,9 @@ function App() {
               <Route path="/faq" element={<FaqPage />} />
               <Route path="/searchTrain" element={<SearchTrain />} />
               <Route path="/booking" element={<BookingForm />} />
+              <Route path="/ticket" element={<Ticket />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
+              {/* <Route path="/payment-success" element={<PaymentSuccess />} /> */}
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/ticket" element={<Ticket />} />
             </Route>
