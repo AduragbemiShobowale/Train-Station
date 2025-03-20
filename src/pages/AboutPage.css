@@ -1,4 +1,4 @@
-.mainContainer {
+.aboutMain-Container {
   background-image: url("../assets/image/Old western train tracks.png");
   background-repeat: no-repeat;
   object-fit: cover;
@@ -9,7 +9,7 @@
 }
 
 @media (min-width: 700px) {
-  .mainContainer {
+  .aboutMain-Container {
     min-height: 18rem; /* 448px converted to rem */
     height: auto;
   }
@@ -21,34 +21,27 @@
   text-align: center;
   align-items: center;
   justify-content: center;
-  /* margin-top: 20px; */
+  margin-top: 20px;
   padding-top: 60px;
   padding-bottom: 60px;
 }
 
 @media (width > 726) {
-  .contentText {
-    padding: 30px;
-    margin: 30px;
-    width: 900px;
-  }
-
   .railway {
     line-height: 100px;
   }
 }
+
 .about {
   font-size: 40px;
   font-weight: 350;
-  margin-bottom: 10px;
-  padding: 10px 20px;
+  padding-top: 5px;
   color: white;
 }
 
 .railway {
   font-size: 16px;
   text-align: center;
-  margin: 20px 20px;
+  padding: 10px 30px;
   color: white;
-  line-height: 25px;
 }
