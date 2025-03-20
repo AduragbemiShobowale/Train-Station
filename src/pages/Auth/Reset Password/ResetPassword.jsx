@@ -228,7 +228,7 @@ const ResetPassword = () => {
 
           <div className="text-center mt-4">
             <span className="text-gray-600">Remember your password? </span>
-            <a href="/login" className="text-green-500 hover:underline">
+            <a href="/signin" className="text-green-500 hover:underline">
               Login
             </a>
           </div>
