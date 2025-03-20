@@ -8,7 +8,7 @@ import Testimonial from "../components/testimonials/Testimonial";
 const AboutPage = () => {
   return (
     <div>
-      <div className="mainContainer">
+      <div className="aboutMain-Container">
         <div className="contentText">
           <h1 className="about">
             <b>About NRC</b>{" "}
