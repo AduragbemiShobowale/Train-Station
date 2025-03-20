@@ -1,10 +1,198 @@
-import React from "react";
+import React, { useState } from "react";
 import signUpImage from "../../../assets/image/signUp.png";
 import trainLogo from "../../../assets/icon/TrainLogo.png";
-import { LuEyeOff } from "react-icons/lu";
+import { LuEye, LuEyeOff } from "react-icons/lu";
 import "./Register.css";
+import axios from "axios";
 
 const Register = () => {
+  // State for form values
+  const [formValues, setFormValues] = useState({
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    dateOfBirth: "",
+    gender: "",
+    identificationType: "",
+    idNumber: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  // State for errors
+  const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // State for password requirements
+  const [passwordRequirements, setPasswordRequirements] = useState({
+    minLength: false,
+    hasLower: false,
+    hasUpper: false,
+    hasNumber: false,
+    hasSpecial: false,
+  });
+
+  // State to track if password field has been interacted with
+  const [isPasswordTouched, setIsPasswordTouched] = useState(false);
+
+  // State to track if all requirements are met
+  const [areAllRequirementsMet, setAreAllRequirementsMet] = useState(false);
+
+  // Toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword((prev) => !prev);
+  };
+
+  // Handle form input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
+
+    // Check password requirements when password field changes
+    if (name === "password") {
+      checkPasswordRequirements(value);
+      setIsPasswordTouched(true);
+    }
+  };
+
+  // Check password against requirements
+  const checkPasswordRequirements = (password) => {
+    const requirements = {
+      minLength: password.length >= 8,
+      hasLower: /[a-z]/.test(password),
+      hasUpper: /[A-Z]/.test(password),
+      hasNumber: /\d/.test(password),
+      hasSpecial: /[@$!%*?&]/.test(password),
+    };
+
+    const allMet = Object.values(requirements).every((req) => req);
+    setAreAllRequirementsMet(allMet);
+
+    setPasswordRequirements(requirements);
+  };
+
+  // Validate form before submission
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Required fields check
+    [
+      "firstName",
+      "lastName",
+      "phoneNumber",
+      "dateOfBirth",
+      "gender",
+      "identificationType",
+      "idNumber",
+      "email",
+      "password",
+      "confirmPassword",
+    ].forEach((field) => {
+      if (!formValues[field]) {
+        newErrors[field] = `Please enter your ${field}`;
+      }
+    });
+
+    // Email format validation
+    if (
+      formValues.email &&
+      !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)
+    ) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    // Phone number format validation
+    if (formValues.phoneNumber && !/^\d{10,15}$/.test(formValues.phoneNumber)) {
+      newErrors.phoneNumber = "Please enter a valid phone number";
+    }
+
+    // ID number format validation
+    if (formValues.idNumber) {
+      if (!/^\d+$/.test(formValues.idNumber)) {
+        newErrors.idNumber = "ID number must contain only digits";
+      } else if (formValues.idNumber.length !== 11) {
+        newErrors.idNumber = "ID number must be exactly 11 digits";
+      }
+    } else {
+      newErrors.idNumber = "Please enter your ID number";
+    }
+
+    // Password strength validation
+    if (
+      formValues.password &&
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+        formValues.password
+      )
+    ) {
+      newErrors.password =
+        "Password must be 8 character long and contain at least one uppercase letter, one lowercase letter, one number, and one special character";
+    }
+
+    // Confirm password validation
+    if (formValues.confirmPassword !== formValues.password) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await axios.post(
+        "https://train-station-backend.onrender.com/api/v1/auth/register",
+        {
+          firstName: formValues.firstName,
+          lastName: formValues.lastName,
+          phoneNumber: formValues.phoneNumber,
+          dateOfBirth: formValues.dateOfBirth,
+          gender: formValues.gender,
+          identificationType: formValues.identificationType,
+          idNumber: formValues.idNumber,
+          email: formValues.email,
+          password: formValues.password,
+        }
+      );
+
+      if (response.status === 201) {
+        window.location.href = "/signin";
+      }
+    } catch (error) {
+      // Debug: log the error response
+      console.error("Registration failed:", error.response);
+
+      if (error.response && error.response.data && error.response.data.errors) {
+        setErrors(error.response.data.errors);
+      } else {
+        setErrors((prev) => ({
+          ...prev,
+          general: "Registration failed. Please try again.",
+        }));
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col lg:flex-row-reverse relative register pb-10 lg:pb-0">
       {/* Image Background for Desktop */}
@@ -17,7 +205,7 @@ const Register = () => {
       </div>
 
       {/* Main Content Container */}
-      <main className="flex flex-col justify-between lg:w-1/2 bg-white register ">
+      <main className="flex flex-col justify-between lg:w-1/2 bg-white register">
         {/* Header with Logo */}
         <header className="p-5 lg:p-8 bg-white lg:hidden">
           <a href="/">
@@ -37,8 +225,13 @@ const Register = () => {
             Fill the information below to create a new account
           </p>
 
+          {/* General Error Message */}
+          {errors.general && (
+            <p className="text-red-500 text-sm mb-4">{errors.general}</p>
+          )}
+
           {/* Form Fields */}
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {/* First Name & Last Name */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -51,11 +244,20 @@ const Register = () => {
                 <input
                   type="text"
                   id="firstName"
-                  className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  name="firstName"
+                  value={formValues.firstName}
+                  onChange={handleChange}
+                  className={`w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 ${
+                    errors.firstName ? "border-red-500" : ""
+                  }`}
                   placeholder="Enter first name"
                 />
+                {errors.firstName && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.firstName}
+                  </p>
+                )}
               </div>
-
               <div>
                 <label
                   htmlFor="lastName"
@@ -66,9 +268,17 @@ const Register = () => {
                 <input
                   type="text"
                   id="lastName"
-                  className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  name="lastName"
+                  value={formValues.lastName}
+                  onChange={handleChange}
+                  className={`w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 ${
+                    errors.lastName ? "border-red-500" : ""
+                  }`}
                   placeholder="Enter last name"
                 />
+                {errors.lastName && (
+                  <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>
+                )}
               </div>
             </div>
 
@@ -84,11 +294,34 @@ const Register = () => {
                 <input
                   type="tel"
                   id="phone"
-                  className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  name="phoneNumber"
+                  value={formValues.phoneNumber}
+                  onChange={handleChange}
+                  onKeyPress={(e) => {
+                    const allowedKeys = [
+                      "Backspace",
+                      "Delete",
+                      "ArrowLeft",
+                      "ArrowRight",
+                    ];
+                    if (allowedKeys.includes(e.key)) return;
+                    if (!/[0-9]/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                  className={`w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 ${
+                    errors.phoneNumber ? "border-red-500" : ""
+                  }`}
                   placeholder="Enter phone number"
+                  pattern="[0-9]*"
+                  inputMode="numeric"
                 />
+                {errors.phoneNumber && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.phoneNumber}
+                  </p>
+                )}
               </div>
-
               <div>
                 <label
                   htmlFor="dob"
@@ -99,8 +332,18 @@ const Register = () => {
                 <input
                   type="date"
                   id="dob"
-                  className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  name="dateOfBirth"
+                  value={formValues.dateOfBirth}
+                  onChange={handleChange}
+                  className={`w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 ${
+                    errors.dateOfBirth ? "border-red-500" : ""
+                  }`}
                 />
+                {errors.dateOfBirth && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.dateOfBirth}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -115,14 +358,21 @@ const Register = () => {
                 </label>
                 <select
                   id="gender"
-                  className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  name="gender"
+                  value={formValues.gender}
+                  onChange={handleChange}
+                  className={`w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 ${
+                    errors.gender ? "border-red-500" : ""
+                  }`}
                 >
                   <option value="">Select gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
                 </select>
+                {errors.gender && (
+                  <p className="text-red-500 text-xs mt-1">{errors.gender}</p>
+                )}
               </div>
-
               <div>
                 <label
                   htmlFor="idType"
@@ -132,14 +382,26 @@ const Register = () => {
                 </label>
                 <select
                   id="idType"
-                  className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  name="identificationType"
+                  value={formValues.identificationType}
+                  onChange={handleChange}
+                  className={`w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 ${
+                    errors.identificationType ? "border-red-500" : ""
+                  }`}
                 >
                   <option value="">Select identification type</option>
-                  <option value="nin">NIN</option>
-                  <option value="national-id">National ID</option>
-                  <option value="passport">International Passport</option>
-                  <option value="drivers-license">Driver's License</option>
+                  <option value="NIN">NIN</option>
+                  <option value="National ID">National ID</option>
+                  <option value="International Passport">
+                    International Passport
+                  </option>
+                  <option value="Driver's License">Driver's License</option>
                 </select>
+                {errors.identificationType && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.identificationType}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -155,11 +417,23 @@ const Register = () => {
                 <input
                   type="text"
                   id="idNumber"
-                  className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  name="idNumber"
+                  value={formValues.idNumber}
+                  onChange={handleChange}
+                  onKeyPress={(e) => {
+                    if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete') {
+                      e.preventDefault();
+                    }
+                  }}
+                  className={`w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 ${
+                    errors.idNumber ? "border-red-500" : ""
+                  }`}
                   placeholder="Enter ID number"
                 />
+                {errors.idNumber && (
+                  <p className="text-red-500 text-xs mt-1">{errors.idNumber}</p>
+                )}
               </div>
-
               <div>
                 <label
                   htmlFor="email"
@@ -170,9 +444,17 @@ const Register = () => {
                 <input
                   type="email"
                   id="email"
-                  className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  name="email"
+                  value={formValues.email}
+                  onChange={handleChange}
+                  className={`w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 ${
+                    errors.email ? "border-red-500" : ""
+                  }`}
                   placeholder="Enter email address"
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                )}
               </div>
             </div>
 
@@ -187,17 +469,88 @@ const Register = () => {
                 </label>
                 <div className="relative">
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     id="password"
-                    className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 pr-10"
+                    name="password"
+                    value={formValues.password}
+                    onChange={handleChange}
+                    className={`w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 pr-10 ${
+                      errors.password ? "border-red-500" : ""
+                    }`}
                     placeholder="Enter password"
                   />
-                  <button type="button" className="absolute right-3 top-3">
-                    <LuEyeOff className="w-5 h-5 text-gray-400" />
+                  <button
+                    type="button"
+                    className="absolute right-3 top-3"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? (
+                      <LuEye className="w-5 h-5 text-gray-400" />
+                    ) : (
+                      <LuEyeOff className="w-5 h-5 text-gray-400" />
+                    )}
                   </button>
                 </div>
-              </div>
+                {errors.password && (
+                  <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+                )}
 
+                {/* Password requirements */}
+                {isPasswordTouched && !areAllRequirementsMet && (
+                  <div className="mt-2 space-y-1">
+                    <div className="flex items-center">
+                      <span
+                        className={`w-4 h-4 rounded-full mr-2 ${
+                          passwordRequirements.minLength
+                            ? "bg-green-500"
+                            : "bg-gray-400"
+                        }`}
+                      />
+                      <span className="text-xs">Minimum 8 characters</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span
+                        className={`w-4 h-4 rounded-full mr-2 ${
+                          passwordRequirements.hasLower
+                            ? "bg-green-500"
+                            : "bg-gray-400"
+                        }`}
+                      />
+                      <span className="text-xs">One lower case</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span
+                        className={`w-4 h-4 rounded-full mr-2 ${
+                          passwordRequirements.hasUpper
+                            ? "bg-green-500"
+                            : "bg-gray-400"
+                        }`}
+                      />
+                      <span className="text-xs">One upper case</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span
+                        className={`w-4 h-4 rounded-full mr-2 ${
+                          passwordRequirements.hasNumber
+                            ? "bg-green-500"
+                            : "bg-gray-400"
+                        }`}
+                      />
+                      <span className="text-xs">One number</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span
+                        className={`w-4 h-4 rounded-full mr-2 ${
+                          passwordRequirements.hasSpecial
+                            ? "bg-green-500"
+                            : "bg-gray-400"
+                        }`}
+                      />
+                      <span className="text-xs">One special character</span>
+                    </div>
+                  </div>
+                )}
+              </div>
               <div>
                 <label
                   htmlFor="confirmPassword"
@@ -207,24 +560,47 @@ const Register = () => {
                 </label>
                 <div className="relative">
                   <input
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                     id="confirmPassword"
-                    className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 pr-10"
-                    placeholder="Enter password"
+                    name="confirmPassword"
+                    value={formValues.confirmPassword}
+                    onChange={handleChange}
+                    className={`w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 pr-10 ${
+                      errors.confirmPassword ? "border-red-500" : ""
+                    }`}
+                    placeholder="Confirm password"
                   />
-                  <button type="button" className="absolute right-3 top-3">
-                    <LuEyeOff className="w-5 h-5 text-gray-400" />
+                  <button
+                    type="button"
+                    className="absolute right-3 top-3"
+                    onClick={toggleConfirmPasswordVisibility}
+                  >
+                    {showConfirmPassword ? (
+                      <LuEye className="w-5 h-5 text-gray-400" />
+                    ) : (
+                      <LuEyeOff className="w-5 h-5 text-gray-400" />
+                    )}
                   </button>
                 </div>
+                {errors.confirmPassword && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.confirmPassword}
+                  </p>
+                )}
               </div>
             </div>
 
             {/* Sign Up Button */}
             <button
               type="submit"
-              className="w-full bg-green-500 text-white py-3 rounded-md font-medium hover:bg-green-600 transition duration-200"
+              disabled={isSubmitting}
+              className={`w-full bg-green-500 text-white py-3 rounded-md font-medium transition duration-200 ${
+                isSubmitting
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-green-600"
+              }`}
             >
-              Sign Up
+              {isSubmitting ? "Loading..." : "Sign Up"}
             </button>
           </form>
           {/* Footer with Sign In Link */}

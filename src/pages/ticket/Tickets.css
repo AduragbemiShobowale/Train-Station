@@ -1,0 +1,240 @@
+.ticketHeader {
+  color: white;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.trainRack {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.trainRoad {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.trainRail {
+  color: rgba(109, 109, 109, 1);
+}
+.trainBounce {
+  color: black;
+}
+.genTicketInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.topTicketInfo {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  border: 0.7px solid rgba(0, 0, 0, 0.2);
+  max-width: 1024px;
+  padding: 50px;
+  border-radius: 30px;
+  gap: 30px;
+}
+
+.trainInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stationInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 40px;
+}
+
+.leftInfo,
+.rightInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.middleInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+
+.bottomTicketInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.train-information {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.activeText {
+  background-color: rgb(223, 241, 226);
+  padding: 10px;
+  width: 130px;
+  color: #18a532;
+  text-align: center;
+  border-radius: 30px;
+  border: 1px solid #18a532;
+}
+
+/* .classText1 {
+  padding: 5px;
+  border-radius: 30px;
+  text-align: center;
+} */
+
+.leftImg,
+.rightImg {
+  display: none;
+}
+
+.duration {
+  display: flex;
+  flex-direction: column;
+}
+
+/* @media (max-width: 768px) {
+    .stationInfo {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+    .stationLocation {
+      display: flex;
+      gap: 5px;
+    }
+  
+    .topTicketInfo{padding: 30px;}
+    
+  
+    h5{font-size: 10px;
+  font-weight: 600;}
+  
+  .activeText{padding: 5px;}
+  
+    p{font-size: 8px;}
+  } */
+@media (max-width: 768px) {
+  .topTicketInfo {
+    padding: 20px;
+    max-width: 90%;
+    gap: 20px;
+  }
+
+  .stationInfo {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .bottomTicketInfo {
+    display: flex;
+    gap: 20px;
+  }
+
+  /* .bottomTicketInfo {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+      } */
+
+  .activeText {
+    padding: 5px;
+    width: auto;
+    font-size: 12px;
+  }
+
+  .trainRack {
+    font-size: 12px;
+  }
+
+  .trainRoad {
+    font-size: 14px;
+  }
+
+  .stationLocation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+  }
+  .trainRail .stationLocation {
+    text-align: center;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  /* .classImg {
+    max-width: 100%;
+    height: 50px;
+  } */
+
+  .qrCode {
+    max-width: 60%;
+    max-height: 60%;
+  }
+  .durationIcon {
+    display: none;
+  }
+
+  .leftImg,
+  .rightImg {
+    display: block;
+  }
+  .newbie {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  .leftImg,
+  .rightImg {
+    width: 20%;
+    height: 20%;
+  }
+  .classText1 {
+    width: 50%;
+  }
+  .middleInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .stationInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 1024px) {
+  .topTicketInfo {
+    padding: 20px;
+    max-width: 90%;
+    gap: 20px;
+  }
+
+  .trainRail {
+    font-size: 12px;
+  }
+}
