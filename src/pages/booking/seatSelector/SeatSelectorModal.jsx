@@ -9,11 +9,13 @@ const SeatSelectorModal = ({
   selectedSeats,
   className,
   coachName,
+  trainId,
 }) => {
   const [currentSelectedSeats, setCurrentSelectedSeats] = useState(
     selectedSeats || []
   );
   const [errorMessage, setErrorMessage] = useState("");
+  const [reservedSeats, setReservedSeats] = useState([]);
 
   // Get seat configuration based on class and coach
   const getClassConfig = () => SEAT_CONFIG[className] || {};
@@ -37,7 +39,31 @@ const SeatSelectorModal = ({
     setCurrentSelectedSeats(selectedSeats || []);
   }, [selectedSeats]);
 
+  // Fetch reserved seats when the component mounts
+  useEffect(() => {
+    const fetchReservedSeats = async () => {
+      try {
+        const response = await fetch(`/api/v1/trains/${trainId}`);
+        const trainData = await response.json();
+        const classData = trainData.classes.find((c) => c.type === className);
+        setReservedSeats(classData?.reservedSeatNumbers || []);
+      } catch (error) {
+        console.error("Error fetching reserved seats:", error);
+      }
+    };
+
+    if (isOpen && trainId) {
+      fetchReservedSeats();
+    }
+  }, [isOpen, trainId, className]);
+
   const handleSeatClick = (seatNumber) => {
+    // Check if seat is reserved
+    if (reservedSeats.includes(seatNumber)) {
+      setErrorMessage("This seat is already reserved");
+      return;
+    }
+
     // Get maximum allowed seats per class
     const maxSeats =
       {
@@ -121,6 +147,8 @@ const SeatSelectorModal = ({
                       key={seat}
                       className={`seat ${
                         currentSelectedSeats.includes(seat) ? "selected" : ""
+                      } ${
+                        reservedSeats.includes(seat) ? "unavailable" : ""
                       } ${className.toLowerCase().replace(" ", "-")}`}
                       onClick={() => handleSeatClick(seat)}
                     >

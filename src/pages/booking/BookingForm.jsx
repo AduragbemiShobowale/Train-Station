@@ -674,6 +674,7 @@ const BookingForm = () => {
         selectedSeats={seatData.seats}
         className={seatData.class}
         coachName={seatData.coach}
+        trainId={selectedTrain._id} // Pass the train ID to the modal
       />
     </div>
   );
