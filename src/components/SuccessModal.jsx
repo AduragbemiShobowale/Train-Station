@@ -4,20 +4,18 @@ import "./SuccessModal.css";
 import { IoClose } from "react-icons/io5";
 
 const SuccessModal = ({ isOpen, onClose }) => {
-  // If the parent says "not open," don't render anything.
   if (!isOpen) return null;
 
   return (
     <div className="Success-Main flex items-center justify-center relative">
-      {/* Modal overlay and content */}
-      <button
-        onClick={onClose}
-        className="absolute bottom-29 left-40 text-gray-500 hover:text-black transition"
-      >
-        <IoClose className="w-5 h-5 md:w-6 md:h-6" />
-      </button>
       <div className="main-modal fixed bg-black/50 min-h-screen z-10 w-screen flex justify-center items-center top-0 left-0">
-        <div className="success-body bg-white mx-10 px-10 py-20 flex justify-center w-[90%] md:w-[400px]">
+        <div className="success-body bg-white mx-10 px-10 py-20 flex justify-center w-[90%] md:w-[500px]">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-gray-500 hover:text-black transition picks"
+          >
+            <IoClose className="w-5 h-5 md:w-6 md:h-6" />
+          </button>
           <div className="successContent">
             <img
               className="ticIcon flex justify-center px-20 py-4 h-35 mx-auto"

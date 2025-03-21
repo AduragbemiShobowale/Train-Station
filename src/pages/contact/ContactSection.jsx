@@ -7,6 +7,7 @@ import Twitter from "../../assets/icon/twiitterVector.png";
 import Instag from "../../assets/icon/instagramVector.png";
 import Linkedin from "../../assets/icon/linkedInVector.png";
 import Facebook from "../../assets/icon/facebookVector.png";
+import SuccessModals from "./SuccessModals";
 
 const ContactSection = () => {
   const FORMSPREE_ENDPOINT = "https://formspree.io/f/mldjdqno"; // Your Formspree endpoint
@@ -24,6 +25,8 @@ const ContactSection = () => {
     phone: "",
     message: "",
   });
+
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,15 +53,8 @@ const ContactSection = () => {
         );
       }
 
-      // Reset form and errors
-      e.target.reset();
-      setErrors({
-        name: "",
-        email: "",
-        phone: "",
-        message: "",
-      });
-      alert("Your message has been sent successfully!");
+      // Show success modal
+      setIsSuccessModalOpen(true);
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("There was an error submitting your message. Please try again.");
@@ -164,6 +160,25 @@ const ContactSection = () => {
       ...prev,
       [fieldName]: newError,
     }));
+  };
+
+  // New function to handle modal close
+  const handleModalClose = () => {
+    setIsSuccessModalOpen(false);
+    // Reset form values
+    setFormValues({
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+    });
+    // Reset errors
+    setErrors({
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+    });
   };
 
   return (
@@ -327,6 +342,10 @@ const ContactSection = () => {
           </button>
         </form>
       </div>
+      <SuccessModals
+        isOpen={isSuccessModalOpen}
+        onClose={handleModalClose} // Use the new handleModalClose function
+      />
     </div>
   );
 };
