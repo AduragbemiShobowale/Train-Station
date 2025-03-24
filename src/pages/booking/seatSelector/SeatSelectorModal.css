@@ -123,6 +123,11 @@
   color: white;
 }
 
+.seat.unavailable {
+  background-color: #ff6b6b; /* Red color */
+  cursor: not-allowed; /* Change cursor to not-allowed */
+}
+
 /* Footer */
 .modal-footer {
   margin-top: 15px;
