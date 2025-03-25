@@ -98,7 +98,7 @@ const ResetPassword = () => {
             password.
           </p>
           <a
-            href="/login"
+            href="/signin"
             className="text-green-500 hover:underline font-medium"
           >
             Go to Login
