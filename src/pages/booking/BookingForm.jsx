@@ -204,7 +204,7 @@ const BookingForm = () => {
       passengers,
       contact,
     };
-    console.log("Booking Data:", bookingData);
+    // console.log("Booking Data:", bookingData);
     navigate("/checkout", { state: { bookingData } });
   };
 
