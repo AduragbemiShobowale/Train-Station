@@ -78,9 +78,9 @@ const FindTrain = ({ onSearch, onError }) => {
     setIsLoading(true);
 
     try {
-      console.log(
-        "handleFindTrain called — about to POST /api/v1/trains/search"
-      );
+      // console.log(
+      //   "handleFindTrain called — about to POST /api/v1/trains/search"
+      // );
       const response = await axios.post("/api/v1/trains/search", {
         fromStation: origin,
         toStation: destination,

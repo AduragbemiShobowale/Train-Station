@@ -6,18 +6,17 @@ import Cookies from "js-cookie";
 axios.interceptors.request.use(
   (config) => {
     const authCookie = Cookies.get("auth");
-    console.log("authCookie is:", authCookie); // <-- Add this
+    // <-- Add this
 
     if (authCookie) {
       const authData = JSON.parse(authCookie);
-      console.log("Parsed authData is:", authData); // <-- And this
+      // <-- And this
 
       if (authData.token) {
         config.headers.Authorization = `Bearer ${authData.token}`;
       }
     }
 
-    console.log("Outgoing request headers:", config.headers);
     return config;
   },
   (error) => Promise.reject(error)
@@ -37,7 +36,7 @@ export const AuthProvider = ({ children }) => {
 
   // Log auth state changes for debugging
   useEffect(() => {
-    console.log("Auth state changed:", auth);
+    // console.log("Auth state changed:", auth);
   }, [auth]);
 
   // 2️⃣ Optionally set a base URL for axios
@@ -52,10 +51,10 @@ export const AuthProvider = ({ children }) => {
     axios.defaults.headers.common["Authorization"] = auth?.token
       ? `Bearer ${auth.token}`
       : "";
-    console.log(
-      "Axios default header:",
-      axios.defaults.headers.common["Authorization"]
-    );
+    // console.log(
+    //   "Axios default header:",
+    //   axios.defaults.headers.common["Authorization"]
+    // );
   }, [auth?.token]);
 
   // 4️⃣ Login function
